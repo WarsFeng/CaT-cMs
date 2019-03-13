@@ -1,2 +1,4 @@
 rootProject.name = 'cms-service'
+include 'cms-common'
+include 'cms-cat.wars.cms.framework.utils'
 

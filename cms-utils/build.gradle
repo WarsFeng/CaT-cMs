@@ -1,0 +1,12 @@
+dependencies {
+    annotationProcessor "org.projectlombok:lombok"
+    implementation "javax.servlet:javax.servlet-api"
+    implementation "org.springframework.boot:spring-boot-starter-logging"
+    implementation "org.apache.httpcomponents:httpclient:${httpclient_version}"
+    implementation "net.lingala.zip4j:zip4j:${zip4j_version}"
+    implementation "org.springframework.security:spring-security-crypto:${springframework_version}"
+    implementation "org.springframework.security:spring-security-jwt:${spring_security_jwt_version}"
+    implementation "com.alibaba:fastjson"
+    implementation "commons-io:commons-io"
+    implementation "org.apache.commons:commons-lang3"
+}

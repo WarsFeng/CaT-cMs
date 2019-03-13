@@ -1,39 +1,45 @@
 plugins {
-    id 'java'
-    id 'org.springframework.boot' version '2.1.2.RELEASE'
-    id 'io.spring.dependency-management' version "1.0.6.RELEASE"
+    id "java"
+    id "org.springframework.boot" version "2.1.2.RELEASE"
+    id "io.spring.dependency-management" version "1.0.6.RELEASE"
 }
 
 ext {
-    spring_cloud_version = 'Greenwich.RELEASE' // N
-    spring_boot_version = '2.1.2.RELEASE'
-    springframework_version = '5.1.4.RELEASE'
-    mybatis_spring_boot_version = '1.3.3'
-    mybatis_version = '3.4.6'
-    pagehelper_spring_boot_version = '1.2.10'
-    druid_version = '1.1.13'
-    mysql_connector_java_version = '8.0.14'
-    commons_io_version = '2.6'
-    org_apache_commons_io_version = '1.3.2'
-    commons_fileupload_version = '1.4'
-    commons_codec_version = '1.12'
-    commons_lang3_version = '3.8.1'
-    okhttp_version = '3.12.1'
-    // feign_okhttp_version = '8.18.0'
+    spring_cloud_version = "Greenwich.RELEASE" // N
+    spring_cloud_feign_version = "1.4.6.RELEASE"
+    spring_boot_version = "2.1.2.RELEASE"
+    springframework_version = "5.1.3.RELEASE"
+    mybatis_spring_boot_version = "1.3.3"
+    mybatis_version = "3.4.6"
+    pagehelper_spring_boot_version = "1.2.10"
+    druid_version = "1.1.13"
+    mysql_connector_java_version = "8.0.14"
+    commons_io_version = "2.6"
+    org_apache_commons_io_version = "1.3.2"
+    commons_fileupload_version = "1.4"
+    commons_codec_version = "1.12"
+    commons_lang3_version = "3.8.1"
+    okhttp_version = "3.12.1"
+    // feign_okhttp_version = "8.18.0"
     // Github version
-    feign_okhttp_version = '10.1.0'
-    lombok_version = '1.18.4'
-    springfox_swagger_version = '2.9.2'
-    fastjson_version = '1.2.55'
-    fastdfs_client_java_version = '1.27.0.0'
-    elasticsearch_version = '6.6.0'
-    guava_version = '27.0.1-jre'
+    feign_okhttp_version = "10.1.0"
+    lombok_version = "1.18.4"
+    springfox_swagger_version = "2.9.2"
+    fastjson_version = "1.2.55"
+    fastdfs_client_java_version = "1.27.0.0"
+    elasticsearch_version = "6.6.0"
+    guava_version = "27.0.1-jre"
+
+    httpclient_version = "4.5.6"
+    zip4j_version = "1.3.2"
+    spring_security_jwt_version = "1.0.10.RELEASE"
 }
 
 
 allprojects {
-    group 'cat.wars.cms'
-    version '1.0-SNAPSHOT'
+    apply plugin: "java"
+    group "cat.wars.cms"
+    version "1.0-SNAPSHOT"
 
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
@@ -45,22 +51,22 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: 'java'
-    apply plugin: 'org.springframework.boot'
-    apply plugin: 'io.spring.dependency-management'
+    apply plugin: "java"
+    apply plugin: "org.springframework.boot"
+    apply plugin: "io.spring.dependency-management"
 
-    def defaultEncoding = 'UTF-8'
+    def defaultEncoding = "UTF-8"
     tasks.withType(AbstractCompile).each { it.options.encoding = defaultEncoding }
 
     javadoc {
         options.encoding = defaultEncoding
-        options.addBooleanOption('Xdoclint:none', true)
+        options.addBooleanOption("Xdoclint:none", true)
     }
 
     compileJava.dependsOn(processResources)
 
     test {
-        include '**/model/**', '**/controller/**', '**/usecase/**', '**/util/**', '**/context/**'
+        include "**/model/**", "**/controller/**", "**/usecase/**", "**/util/**", "**/context/**"
     }
 
     springBoot {
@@ -70,13 +76,15 @@ subprojects {
     dependencyManagement {
         imports {
             mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
-            mavenBom 'org.springframework.cloud:spring-cloud-dependencies:${spring_cloud_version}'
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${spring_cloud_version}"
         }
     }
 
     dependencies {
         annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${spring_boot_version}"
         annotationProcessor "org.projectlombok:lombok:${lombok_version}"
+        annotationProcessor "io.springfox:springfox-swagger2:${springfox_swagger_version}"
+        annotationProcessor "io.springfox:springfox-swagger-ui:${springfox_swagger_version}"
         compileOnly "org.springframework.boot:spring-boot-configuration-processor:${spring_boot_version}"
         compileOnly "org.projectlombok:lombok:${lombok_version}"
         implementation "mysql:mysql-connector-java:${mysql_connector_java_version}"
@@ -84,14 +92,13 @@ subprojects {
         implementation "com.github.pagehelper:pagehelper-spring-boot-starter:${pagehelper_spring_boot_version}"
         implementation "com.alibaba:druid:${druid_version}"
         implementation "com.squareup.okhttp3:okhttp:${okhttp_version}"
-        implementation "com.netflix.feign:feign-okhttp:${feign_okhttp_version}"
+        //implementation "com.netflix.feign:feign-okhttp:${feign_okhttp_version}"
+        implementation "io.github.openfeign:feign-okhttp:${feign_okhttp_version}"
         implementation "commons-io:commons-io:${commons_io_version}"
         implementation "org.apache.commons:commons-io:${org_apache_commons_io_version}"
         implementation "commons-fileupload:commons-fileupload:${commons_fileupload_version}"
         implementation "commons-codec:commons-codec:${commons_codec_version}"
         implementation "org.apache.commons:commons-lang3:${commons_lang3_version}"
-        implementation "io.springfox:springfox-swagger2:${springfox_swagger_version}"
-        implementation "io.springfox:springfox-swagger-ui:${springfox_swagger_version}"
         implementation "com.alibaba:fastjson:${fastjson_version}"
         implementation "net.oschina.zcx7878:fastdfs-client-java:${fastdfs_client_java_version}"
         implementation "org.elasticsearch.client:elasticsearch-rest-high-level-client:${elasticsearch_version}"
@@ -104,9 +111,9 @@ subprojects {
 
 }
 
-//project(':cms-') {
+//project(":cms-") {
 //    dependencies {
-//        implementation project(':cms-')
+//        implementation project(":cms-")
 //    }
 //}
 
