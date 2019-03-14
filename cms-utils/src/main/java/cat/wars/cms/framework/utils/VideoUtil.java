@@ -90,12 +90,12 @@ public class VideoUtil {
                 }
                 try {
                     while (in.available() > 0) {
-                        Character c = new Character((char) in.read());
+                        Character c = Character.valueOf((char) in.read()); // Deprecated, change newed
                         outputString.append(c);
                         System.out.print(c);
                     }
                     while (error.available() > 0) {
-                        Character c = new Character((char) in.read());
+                        Character c = Character.valueOf((char) in.read()); // Deprecated, change newed
                         outputString.append(c);
                         System.out.print(c);
                     }

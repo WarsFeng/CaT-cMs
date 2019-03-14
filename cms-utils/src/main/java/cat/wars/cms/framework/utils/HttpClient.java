@@ -7,12 +7,12 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 
 import javax.net.ssl.SSLContext;
@@ -122,7 +122,7 @@ public class HttpClient {
         CloseableHttpClient httpClient = null;
         try {
             if (isHttps) {
-                SSLContext sslContext = new SSLContextBuilder()
+                SSLContext sslContext = new SSLContextBuilder() // Deprecated, change newed
                         .loadTrustMaterial(null, new TrustStrategy() {
                             // 信任所有
                             public boolean isTrusted(X509Certificate[] chain,

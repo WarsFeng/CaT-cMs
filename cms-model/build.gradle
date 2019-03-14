@@ -1,0 +1,10 @@
+dependencies {
+    compileOnly "org.projectlombok:lombok"
+    implementation "io.springfox:springfox-swagger2"
+    implementation "org.springframework.data:spring-data-commons:${spring_data_commons_version}"
+    implementation "org.springframework.data:spring-data-mongodb:${spring_data_mongodb_version}"
+    implementation "org.hibernate:hibernate-core:${hibernate_version}"
+    implementation "com.google.guava:guava"
+    implementation "commons-io:commons-io"
+    implementation "org.apache.commons:commons-lang3"
+}

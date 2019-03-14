@@ -1,0 +1,9 @@
+dependencies {
+    implementation "commons-fileupload:commons-fileupload"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "io.springfox:springfox-swagger2"
+    implementation "io.springfox:springfox-swagger-ui"
+    implementation "com.alibaba:fastjson"
+    implementation "commons-io:commons-io"
+    implementation "org.apache.commons:commons-lang3"
+}

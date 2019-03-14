@@ -152,8 +152,8 @@ public class Snowflake {
     /**
      * running loop blocking until next millisecond
      *
+     * @param currTimestamp current time stamp
      * @return current time stamp in millisecond
-     * @param    currTimestamp    current time stamp
      */
     protected long waitNextMillis(long currTimestamp) {
         waitCount.incrementAndGet();
