@@ -6,4 +6,5 @@ dependencies {
     implementation "com.alibaba:fastjson"
     implementation "commons-io:commons-io"
     implementation "org.apache.commons:commons-lang3"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
 }
