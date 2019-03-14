@@ -3,4 +3,5 @@ include 'cms-common'
 include 'cms-utils'
 include 'cms-model'
 include 'cms-api'
+include 'cms-service-manager'
 
