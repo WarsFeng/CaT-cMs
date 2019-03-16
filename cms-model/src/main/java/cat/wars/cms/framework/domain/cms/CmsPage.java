@@ -23,7 +23,7 @@ public class CmsPage {
     //页面名称
     private String pageName;
     //别名
-    private String pageAliase;
+    private String pageAlias;
     //访问地址
     private String pageWebPath;
     //参数

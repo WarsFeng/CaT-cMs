@@ -1,0 +1,8 @@
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-freemarker"
+    implementation "org.springframework.boot:spring-boot-starter-data-mongodb"
+    implementation "org.springframework.boot:spring-boot-starter-amqp"
+    implementation "com.squareup.okhttp3:okhttp"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+}

@@ -1,17 +1,14 @@
 package cat.wars.cms.manager.web.controller;
 
 import cat.wars.cms.api.cms.CmsPageControllerApi;
-import cat.wars.cms.framework.domain.cms.CmsPage;
-import cat.wars.cms.framework.domain.cms.request.CmsPageRequest;
-import cat.wars.cms.framework.model.response.CommonCode;
+import cat.wars.cms.framework.domain.cms.request.CmsQueryPageRequest;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
-import cat.wars.cms.framework.model.response.QueryResult;
+import cat.wars.cms.manager.service.CmsPageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -25,17 +22,17 @@ import java.util.List;
 @RequestMapping("/cms/page")
 public class CmsPageController implements CmsPageControllerApi {
 
+    private final CmsPageService service;
+
+    @Autowired
+    public CmsPageController(CmsPageService service) {
+        this.service = service;
+    }
+
     @Override
     @GetMapping("/list/{page}/{size}")
     public QueryResponseResult findList(@PathVariable(name = "page") int page
-            , @PathVariable(name = "size") int size, CmsPageRequest cmsPageRequest) {
-        CmsPage cmsPage = new CmsPage();
-        cmsPage.setPageName("测试页面");
-        List<CmsPage> cmsPageList = List.of(cmsPage);
-
-        QueryResult<CmsPage> queryResult = new QueryResult<>();
-        queryResult.setList(cmsPageList);
-
-        return new QueryResponseResult(CommonCode.SUCCESS, queryResult);
+            , @PathVariable(name = "size") int size, CmsQueryPageRequest request) {
+        return service.findList(page, size, request);
     }
 }

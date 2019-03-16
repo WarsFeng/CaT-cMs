@@ -5,6 +5,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Objects;
+import java.util.stream.Stream;
+
 /**
  * Created by IntelliJ IDEA.
  * User: wars
@@ -15,7 +18,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class CmsPageRequest extends RequestData {
+public class CmsQueryPageRequest extends RequestData {
 
     @ApiModelProperty("Page id")
     private String pageId;
@@ -31,4 +34,9 @@ public class CmsPageRequest extends RequestData {
 
     @ApiModelProperty("Page alias")
     private String pageAlias;
+
+    public boolean isNotValidAddress() {
+        return Stream.of(pageId, siteId, templateId, pageName, pageAlias)
+                .allMatch(Objects::isNull);
+    }
 }
