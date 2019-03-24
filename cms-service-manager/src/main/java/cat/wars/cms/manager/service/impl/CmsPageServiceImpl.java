@@ -58,7 +58,7 @@ public class CmsPageServiceImpl implements CmsPageService {
 
             if (isEmpty(request.getPageAlias())) {
                 example = Example.of(probe);
-            } else { // Fuzzy find alias(contains)
+            } else { // Fuzzy query by alias(contains)
                 ExampleMatcher matching = ExampleMatcher.matching()
                         .withMatcher("pageAlias", matcher -> matcher.contains());
                 probe.setPageAlias(request.getPageAlias());
