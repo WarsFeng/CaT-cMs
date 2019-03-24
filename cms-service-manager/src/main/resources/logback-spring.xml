@@ -45,5 +45,5 @@
         <appender-ref ref="CONSOLE"/>
     </root>
     <!-- Mongodb log -->
-    <logger name="org.springframework.data" level="DEBUG"/>
+    <!--<logger name="org.springframework.data" level="DEBUG"/>-->
 </configuration>
