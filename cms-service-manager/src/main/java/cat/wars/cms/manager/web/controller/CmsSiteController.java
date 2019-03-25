@@ -32,6 +32,7 @@ public class CmsSiteController implements CmsSiteControllerApi {
     @Override
     @GetMapping("/sublist")
     public QueryResponseResult findSubList(String siteName) {
+        log.info("\nQuery subsite list, siteName({})", siteName);
         return service.findSubList(siteName);
     }
 }
