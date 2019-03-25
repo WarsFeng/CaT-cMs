@@ -2,6 +2,7 @@ package cat.wars.cms.manager.dao;
 
 import cat.wars.cms.framework.domain.cms.CmsSite;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * Created by IntelliJ IDEA.
@@ -11,5 +12,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * Cms site repository
  */
 
+@Repository
 public interface CmsSiteRepository extends MongoRepository<CmsSite, String> {
 }

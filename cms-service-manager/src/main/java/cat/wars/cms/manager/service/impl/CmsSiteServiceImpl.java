@@ -33,34 +33,31 @@ public class CmsSiteServiceImpl implements CmsSiteService {
     }
 
     @Override
-    public QueryResponseResult findSubList(String siteName) {
+    public QueryResponseResult findSubList(String query) {
         // Limit 10 and sort
         PageRequest pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "siteCreateTime");
+        // Query
         Page<CmsSite> pages;
-        // Basic query
-        if (isEmpty(siteName))
+        if (isEmpty(query)) // Basic limit query
             pages = repository.findAll(pageable);
-        else {
-
-            // Fuzzy query by siteName(contains)
+        else { // Fuzzy query by siteName(contains)
             CmsSite probe = new CmsSite();
-            probe.setSiteName(siteName);
+            probe.setSiteName(query);
 
             ExampleMatcher matching = ExampleMatcher.matching().withMatcher("siteName", matcher -> matcher.contains());
-            Example<CmsSite> example = Example.of(probe, matching);
-            pages = repository.findAll(example, pageable);
+            pages = repository.findAll(Example.of(probe, matching), pageable);
         }
-        // Result
-        QueryResult<CmsSite> queryResult = new QueryResult<>();
-        queryResult.setTotal(pages.getTotalElements());
-        List<CmsSite> siteList = pages.getContent();
         // Clean properties
+        List<CmsSite> siteList = pages.getContent();
         siteList.forEach(cmsSite -> {
             cmsSite.setSiteDomain(null);
             cmsSite.setSitePort(null);
             cmsSite.setSiteWebPath(null);
             cmsSite.setSiteCreateTime(null);
         });
+        // Result
+        QueryResult<CmsSite> queryResult = new QueryResult<>();
+        queryResult.setTotal(pages.getTotalElements());
         queryResult.setList(siteList);
         return new QueryResponseResult(CommonCode.SUCCESS, queryResult);
     }

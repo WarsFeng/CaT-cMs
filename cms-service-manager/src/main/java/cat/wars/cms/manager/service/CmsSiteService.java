@@ -14,10 +14,10 @@ public interface CmsSiteService {
 
     /**
      * Find site list of id,name
-     *
-     * @param siteName site name
-     * @return cat.wars.cms.framework.model.response.QueryResponseResult
      * limit 10 and sort by createTime
+     *
+     * @param query site name
+     * @return cat.wars.cms.framework.model.response.QueryResponseResult
      */
-    QueryResponseResult findSubList(String siteName);
+    QueryResponseResult findSubList(String query);
 }
