@@ -1,6 +1,8 @@
 package cat.wars.cms.manager.service;
 
+import cat.wars.cms.framework.domain.cms.CmsPage;
 import cat.wars.cms.framework.domain.cms.request.CmsQueryPageRequest;
+import cat.wars.cms.framework.domain.cms.response.CmsPageResult;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
 
 /**
@@ -22,4 +24,12 @@ public interface CmsPageService {
      * @return cat.wars.cms.framework.model.response.QueryResponseResult
      */
     QueryResponseResult findList(int page, int size, CmsQueryPageRequest request);
+
+    /**
+     * Add page
+     *
+     * @param cmsPage {@link CmsPage}
+     * @return cat.wars.cms.framework.domain.cms.response.CmsPageResult
+     */
+    CmsPageResult add(CmsPage cmsPage);
 }

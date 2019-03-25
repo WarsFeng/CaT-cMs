@@ -2,6 +2,8 @@ package cat.wars.cms.manager.service.impl;
 
 import cat.wars.cms.framework.domain.cms.CmsPage;
 import cat.wars.cms.framework.domain.cms.request.CmsQueryPageRequest;
+import cat.wars.cms.framework.domain.cms.response.CmsCode;
+import cat.wars.cms.framework.domain.cms.response.CmsPageResult;
 import cat.wars.cms.framework.model.response.CommonCode;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
 import cat.wars.cms.framework.model.response.QueryResult;
@@ -10,6 +12,8 @@ import cat.wars.cms.manager.service.CmsPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 import static org.apache.logging.log4j.util.Strings.isNotEmpty;
 import static org.springframework.util.StringUtils.isEmpty;
@@ -72,5 +76,18 @@ public class CmsPageServiceImpl implements CmsPageService {
         queryResult.setList(pages.getContent());
         queryResult.setTotal(pages.getTotalElements());
         return new QueryResponseResult(CommonCode.SUCCESS, queryResult);
+    }
+
+    @Override
+    public CmsPageResult add(CmsPage page) {
+        if (isEmpty(page.getSiteId()) || isEmpty(page.getPageWebPath()) || isEmpty(page.getPageName()))
+            return new CmsPageResult(CmsCode.CMS_MANAGER_REQUEST_INVALID, null);
+
+        // Check if the page exists
+        Optional<CmsPage> pageOptional = repository.findBySiteIdAndPageWebPathAndPageName(page.getSiteId(), page.getPageWebPath(), page.getPageName());
+        if (pageOptional.isPresent()) return new CmsPageResult(CmsCode.CMS_ADDPAGE_EXISTSNAME, null);
+        // Avoid injection
+        page.setPageId(null);
+        return new CmsPageResult(CommonCode.SUCCESS, repository.save(page));
     }
 }
