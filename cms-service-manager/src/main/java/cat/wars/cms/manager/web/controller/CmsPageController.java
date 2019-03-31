@@ -5,6 +5,7 @@ import cat.wars.cms.framework.domain.cms.CmsPage;
 import cat.wars.cms.framework.domain.cms.request.CmsQueryPageRequest;
 import cat.wars.cms.framework.domain.cms.response.CmsPageResult;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
+import cat.wars.cms.framework.model.response.ResponseResult;
 import cat.wars.cms.manager.service.CmsPageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,25 @@ public class CmsPageController implements CmsPageControllerApi {
     public CmsPageResult add(@RequestBody CmsPage page) {
         log.info("\nAdd page, page(\n\t{}\n)", page);
         return service.add(page);
+    }
+
+    @Override
+    @GetMapping("/get/{id}")
+    public CmsPageResult findById(@PathVariable(name = "id") String id) {
+        log.info("\nQuery page by id, id({})", id);
+        return service.findById(id);
+    }
+
+    @Override
+    @PutMapping("/update/{id}")
+    public CmsPageResult edit(@PathVariable(name = "id") String id, @RequestBody CmsPage page) {
+        log.info("\nEdit page, id({}), page(\n\t{}\n)", id, page);
+        return service.edit(id, page);
+    }
+
+    @Override
+    @DeleteMapping("/del/{id}")
+    public ResponseResult delete(@PathVariable(name = "id") String id) {
+        return service.delete(id);
     }
 }

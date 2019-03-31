@@ -4,6 +4,7 @@ import cat.wars.cms.framework.domain.cms.CmsPage;
 import cat.wars.cms.framework.domain.cms.request.CmsQueryPageRequest;
 import cat.wars.cms.framework.domain.cms.response.CmsPageResult;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
+import cat.wars.cms.framework.model.response.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -29,4 +30,16 @@ public interface CmsPageControllerApi {
 
     @ApiOperation("Add page")
     CmsPageResult add(CmsPage page);
+
+    @ApiOperation("Query page by id")
+    @ApiImplicitParam(name = "id", value = "page id", required = true, paramType = "path", dataType = "string")
+    CmsPageResult findById(String id);
+
+    @ApiOperation("Update page by id")
+    @ApiImplicitParam(name = "id", value = "page id", required = true, paramType = "path", dataType = "string")
+    CmsPageResult edit(String id, CmsPage page);
+
+    @ApiOperation("Delete page by id")
+    @ApiImplicitParam(name = "id", value = "page id", required = true, paramType = "path", dataType = "string")
+    ResponseResult delete(String id);
 }

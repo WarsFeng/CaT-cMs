@@ -17,6 +17,6 @@ import io.swagger.annotations.ApiOperation;
 public interface CmsSiteControllerApi {
 
     @ApiOperation(value = "Query site list of name,id")
-    @ApiImplicitParam(name = "siteName", value = "Site name", paramType = "query", dataType = "String")
+    @ApiImplicitParam(name = "siteName", value = "Site name", paramType = "query", dataType = "string")
     QueryResponseResult findSubList(String siteName);
 }
