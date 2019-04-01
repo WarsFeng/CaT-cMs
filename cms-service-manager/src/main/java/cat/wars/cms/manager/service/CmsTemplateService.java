@@ -1,5 +1,6 @@
 package cat.wars.cms.manager.service;
 
+import cat.wars.cms.framework.domain.cms.CmsTemplate;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
 
 /**
@@ -21,4 +22,20 @@ public interface CmsTemplateService {
      * @return cat.wars.cms.framework.model.response.QueryResponseResult
      */
     QueryResponseResult findSubList(String siteId, String query);
+
+    /**
+     * Get template by id, if return, always not null
+     *
+     * @param id template id
+     * @return cat.wars.cms.framework.domain.cms.CmsTemplate
+     */
+    CmsTemplate getById(String id);
+
+    /**
+     * Get template file to string
+     *
+     * @param id template id
+     * @return template file string
+     */
+    String getTemplateStr(String id);
 }

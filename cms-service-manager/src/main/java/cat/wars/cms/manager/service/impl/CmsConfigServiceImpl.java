@@ -5,7 +5,7 @@ import cat.wars.cms.framework.domain.cms.response.CmsCode;
 import cat.wars.cms.framework.domain.cms.response.CmsConfigResult;
 import cat.wars.cms.framework.exception.ExceptionCast;
 import cat.wars.cms.framework.model.response.CommonCode;
-import cat.wars.cms.manager.dao.CmsConfigReposotory;
+import cat.wars.cms.manager.dao.CmsConfigRepository;
 import cat.wars.cms.manager.service.CmsConfigService;
 import org.springframework.stereotype.Service;
 
@@ -24,17 +24,17 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 @Service
 public class CmsConfigServiceImpl implements CmsConfigService {
 
-    private final CmsConfigReposotory reposotory;
+    private final CmsConfigRepository repository;
 
-    public CmsConfigServiceImpl(CmsConfigReposotory reposotory) {
-        this.reposotory = reposotory;
+    public CmsConfigServiceImpl(CmsConfigRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public CmsConfigResult findById(String id) {
         if (isEmpty(id)) ExceptionCast.cast(CmsCode.CMS_MANAGER_REQUEST_INVALID);
 
-        Optional<CmsConfig> configOptional = reposotory.findById(id);
+        Optional<CmsConfig> configOptional = repository.findById(id);
         if (configOptional.isEmpty()) ExceptionCast.cast(CmsCode.CMS_MANAGER_REQUEST_INVALID);
 
         return new CmsConfigResult(CommonCode.SUCCESS, configOptional.get());

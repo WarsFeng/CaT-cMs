@@ -13,5 +13,5 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface CmsConfigReposotory extends MongoRepository<CmsConfig, String> {
+public interface CmsConfigRepository extends MongoRepository<CmsConfig, String> {
 }

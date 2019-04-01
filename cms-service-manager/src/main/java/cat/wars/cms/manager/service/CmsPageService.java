@@ -35,12 +35,20 @@ public interface CmsPageService {
     CmsPageResult add(CmsPage cmsPage);
 
     /**
-     * Query page by id
+     * Query page by id, if return, always not null
      *
      * @param id page id
      * @return cat.wars.cms.framework.domain.cms.response.CmsPageResult
      */
     CmsPageResult findById(String id);
+
+    /**
+     * Get page by id, if return, always not null
+     *
+     * @param id page id
+     * @return cat.wars.cms.framework.domain.cms.CmsPage
+     */
+    CmsPage getById(String id);
 
     /**
      * Edit page by id
@@ -58,4 +66,12 @@ public interface CmsPageService {
      * @return cat.wars.cms.framework.model.response.ResponseResult
      */
     ResponseResult delete(String id);
+
+    /**
+     * Page static by id
+     *
+     * @param id page id
+     * @return static html string
+     */
+    String getPageHtml(String id);
 }

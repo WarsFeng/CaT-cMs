@@ -5,5 +5,10 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017
+      uri: mongodb://127.0.0.1:27017
       database: cms
+
+  freemarker:
+    cache: false
+    settings:
+      template_update_delay: 0

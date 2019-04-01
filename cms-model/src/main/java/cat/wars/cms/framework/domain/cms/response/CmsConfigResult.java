@@ -20,6 +20,9 @@ public class CmsConfigResult extends ResponseResult {
 
     private CmsConfig config;
 
+    public CmsConfigResult() {
+    }
+
     public CmsConfigResult(ResultCode resultCode, CmsConfig config) {
         super(resultCode);
         this.config = config;
