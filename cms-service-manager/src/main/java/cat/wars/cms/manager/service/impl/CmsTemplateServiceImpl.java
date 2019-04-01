@@ -2,6 +2,7 @@ package cat.wars.cms.manager.service.impl;
 
 import cat.wars.cms.framework.domain.cms.CmsTemplate;
 import cat.wars.cms.framework.domain.cms.response.CmsCode;
+import cat.wars.cms.framework.exception.ExceptionCast;
 import cat.wars.cms.framework.model.response.CommonCode;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
 import cat.wars.cms.framework.model.response.QueryResult;
@@ -45,7 +46,7 @@ public class CmsTemplateServiceImpl implements CmsTemplateService {
         PageRequest pageable = PageRequest.of(0, 10);
         // Site not exists
         if (isEmpty(siteId) || !siteRepository.existsById(siteId))
-            return new QueryResponseResult(CmsCode.CMS_MANAGER_REQUEST_INVALID, null);
+            ExceptionCast.cast(CmsCode.CMS_MANAGER_REQUEST_INVALID);
         // Query
         Page<CmsTemplate> pages;
         if (isEmpty(query)) // Basic limit query

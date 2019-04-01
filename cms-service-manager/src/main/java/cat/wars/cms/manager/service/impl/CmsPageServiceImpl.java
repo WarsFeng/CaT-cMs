@@ -4,6 +4,7 @@ import cat.wars.cms.framework.domain.cms.CmsPage;
 import cat.wars.cms.framework.domain.cms.request.CmsQueryPageRequest;
 import cat.wars.cms.framework.domain.cms.response.CmsCode;
 import cat.wars.cms.framework.domain.cms.response.CmsPageResult;
+import cat.wars.cms.framework.exception.ExceptionCast;
 import cat.wars.cms.framework.model.response.CommonCode;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
 import cat.wars.cms.framework.model.response.QueryResult;
@@ -82,11 +83,11 @@ public class CmsPageServiceImpl implements CmsPageService {
     @Override
     public CmsPageResult add(CmsPage page) {
         if (isEmpty(page.getSiteId()) || isEmpty(page.getPageWebPath()) || isEmpty(page.getPageName()))
-            return new CmsPageResult(CmsCode.CMS_MANAGER_REQUEST_INVALID, null);
+            ExceptionCast.cast(CmsCode.CMS_MANAGER_REQUEST_INVALID);
 
         // Check if the page exists
         Optional<CmsPage> pageOptional = repository.findBySiteIdAndPageWebPathAndPageName(page.getSiteId(), page.getPageWebPath(), page.getPageName());
-        if (pageOptional.isPresent()) return new CmsPageResult(CmsCode.CMS_ADDPAGE_EXISTSNAME, null);
+        if (pageOptional.isPresent()) ExceptionCast.cast(CmsCode.CMS_ADDPAGE_EXISTSNAME);
         // Avoid injection
         page.setPageId(null);
         return new CmsPageResult(CommonCode.SUCCESS, repository.save(page));
@@ -95,10 +96,10 @@ public class CmsPageServiceImpl implements CmsPageService {
     @Override
     public CmsPageResult findById(String id) {
         // Filter request data
-        if (isEmpty(id)) return new CmsPageResult(CmsCode.CMS_MANAGER_REQUEST_INVALID, null);
+        if (isEmpty(id)) ExceptionCast.cast(CmsCode.CMS_MANAGER_REQUEST_INVALID);
 
         Optional<CmsPage> pageOptional = repository.findById(id);
-        if (pageOptional.isEmpty()) return new CmsPageResult(CmsCode.CMS_MANAGER_PAGE_NOT_EXISTS, null);
+        if (pageOptional.isEmpty()) ExceptionCast.cast(CmsCode.CMS_MANAGER_PAGE_NOT_EXISTS);
         return new CmsPageResult(CommonCode.SUCCESS, pageOptional.get());
     }
 
@@ -124,6 +125,8 @@ public class CmsPageServiceImpl implements CmsPageService {
         dPage.setPagePhysicalPath(page.getPagePhysicalPath());
         // Page type(dynamic-1, static-0)
         dPage.setPageType(page.getPageType());
+        // Page data url
+        dPage.setDataUrl(page.getDataUrl());
         // Page create time
         dPage.setPageCreateTime(page.getPageCreateTime());
 
@@ -136,7 +139,7 @@ public class CmsPageServiceImpl implements CmsPageService {
     public ResponseResult delete(String id) {
         CmsPageResult pageResult = findById(id);
         // Not exists
-        if (!pageResult.isSuccess()) return new ResponseResult(CmsCode.CMS_MANAGER_PAGE_NOT_EXISTS);
+        if (!pageResult.isSuccess()) ExceptionCast.cast(CmsCode.CMS_MANAGER_PAGE_NOT_EXISTS);
 
         repository.deleteById(id);
         return ResponseResult.SUCCESS();

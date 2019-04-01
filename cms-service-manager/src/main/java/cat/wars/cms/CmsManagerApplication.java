@@ -18,7 +18,8 @@ import org.springframework.context.annotation.ComponentScans;
 @EntityScan("cat.wars.cms.framework.domain.cms")
 @ComponentScans({
         @ComponentScan(basePackages = {"cat.wars.cms.manager"}),
-        @ComponentScan(basePackages = {"cat.wars.cms.api.cms"})
+        @ComponentScan(basePackages = {"cat.wars.cms.api.cms"}), // Swagger api
+        @ComponentScan(basePackages = {"cat.wars.cms.framework"})// Exception...
 })
 public class CmsManagerApplication {
 
