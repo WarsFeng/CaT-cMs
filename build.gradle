@@ -136,6 +136,11 @@ project("cms-service-manager") {
         implementation project(":cms-api")
     }
 }
+project("cms-service-manager-client") {
+    dependencies {
+        implementation project(":cms-model")
+    }
+}
 
 // Warpper
 wrapper {

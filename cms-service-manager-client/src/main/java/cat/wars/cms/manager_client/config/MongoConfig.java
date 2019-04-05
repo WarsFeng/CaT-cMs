@@ -1,4 +1,4 @@
-package cat.wars.cms.manager.config;
+package cat.wars.cms.manager_client.config;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.gridfs.GridFSBucket;
@@ -10,9 +10,9 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Created by IntelliJ IDEA.
  * User: wars
- * Date: 4/1/19
- * Time: 7:40 AM
- * Mongodb client config
+ * Date: 4/5/19
+ * Time: 9:24 PM
+ * MongoDB client configuration
  */
 
 @Configuration
