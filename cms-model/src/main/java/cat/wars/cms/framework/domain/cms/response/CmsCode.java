@@ -14,10 +14,13 @@ public enum CmsCode implements ResultCode {
     CMS_GENERATEHTML_TEMPLATEISNULL(false, 24004, "页面模板为空！"),
     CMS_GENERATEHTML_HTMLISNULL(false, 24005, "生成的静态html为空！"),
     CMS_GENERATEHTML_SAVEHTMLERROR(false, 24005, "保存静态html出错！"),
-    CMS_COURSE_PERVIEWISNULL(false, 24007, "预览页面为空！"),
-    CMS_MANAGER_REQUEST_INVALID(false, 24008, "请求数据无效！"),
-    CMS_MANAGER_PAGE_NOT_EXISTS(false, 24009, "页面不存在！"),
-    CMS_MANAGER_PAGE_UPDATE_FAIL(false, 24010, "页面更新失败！"),
+    CMS_GENERATEHTML_PAGE_PHYSICALPATH_ISNULL(false, 24006, "页面物理路径为空！"),
+    CMS_GENERATEHTML_PAGE_SITE_ISNULL(false, 24007, "页面站点为空！"),
+    CMS_GENERATEHTML_PAGE_SITEPHYSICALPATH_ISNULL(false, 24008, "页面站点物理路径为空！"),
+    CMS_COURSE_PERVIEWISNULL(false, 24009, "预览页面为空！"),
+    CMS_MANAGER_REQUEST_INVALID(false, 24010, "请求数据无效！"),
+    CMS_MANAGER_PAGE_NOT_EXISTS(false, 24011, "页面不存在！"),
+    CMS_MANAGER_PAGE_UPDATE_FAIL(false, 24012, "页面更新失败！"),
     ;
     //操作代码
     boolean success;

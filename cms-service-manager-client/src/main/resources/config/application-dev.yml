@@ -14,9 +14,9 @@ spring:
     username: wars
     password: Warscat
     virtual-host: /
-    param:
+    params:
       queue: queue_cms_page_release_01
-      routingkey: 5a751fab6abb5044e0d19ea1
+      routingkey: 5a751fab6abb5044e0d19ea1 # is current site id
       exchange:
         # Release page exchange
         page-release: exchange_routing_cms_page_release

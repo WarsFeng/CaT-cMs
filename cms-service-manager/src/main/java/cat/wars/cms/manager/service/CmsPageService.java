@@ -74,4 +74,13 @@ public interface CmsPageService {
      * @return static html string
      */
     String getPageHtml(String id);
+
+    /**
+     * Release page by id
+     * Page static and push message to mq, mq format: {pageId : ""}
+     *
+     * @param id page id
+     * @return cat.wars.cms.framework.model.response.ResponseResult
+     */
+    ResponseResult release(String id);
 }

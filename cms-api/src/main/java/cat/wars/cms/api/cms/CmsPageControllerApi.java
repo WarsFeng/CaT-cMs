@@ -42,4 +42,8 @@ public interface CmsPageControllerApi {
     @ApiOperation("Delete page by id")
     @ApiImplicitParam(name = "id", value = "page id", required = true, paramType = "path", dataType = "string")
     ResponseResult delete(String id);
+
+    @ApiOperation("Release page by id")
+    @ApiImplicitParam(name = "id", value = "page id", required = true, paramType = "path", dataType = "string")
+    ResponseResult release(String id);
 }

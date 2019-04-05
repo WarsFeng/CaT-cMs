@@ -20,21 +20,21 @@ public class RabbitmqConfig {
     private static final String QUEUE_CMS_PAGE_RELEASE = "queue_cms_page_release";
     private static final String EXCHANGE_TOPIC_CMS_PAGE_RELEASE = "exchange_topic_cms_page_release";
 
-    @Value("spring.rabbitmq.param.queue")
+    @Value("spring.rabbitmq.params.queue")
     private String queue_cms_page_release_name;
-    @Value("spring.rabbitmq.param.exchange.page-release")
+    @Value("spring.rabbitmq.params.exchange.page-release")
     private String exchange_routing_cms_page_release;
-    @Value("spring.rabbitmq.param.routingkey")
+    @Value("spring.rabbitmq.params.routingkey")
     private String routing_key;
 
 
-    @Bean(name = EXCHANGE_TOPIC_CMS_PAGE_RELEASE)
+    @Bean(EXCHANGE_TOPIC_CMS_PAGE_RELEASE)
     public Exchange EXCHANGE_TOPIC_CMS_PAGE_RELEASE() {
         return ExchangeBuilder.topicExchange(exchange_routing_cms_page_release)
                 .durable(true).build(); // Durable
     }
 
-    @Bean(name = QUEUE_CMS_PAGE_RELEASE)
+    @Bean(QUEUE_CMS_PAGE_RELEASE)
     public Queue QUEUE_CMS_PAGE_RELEASE() {
         return new Queue(queue_cms_page_release_name); // Default durable, not exclusive, not autoDelete ...
     }

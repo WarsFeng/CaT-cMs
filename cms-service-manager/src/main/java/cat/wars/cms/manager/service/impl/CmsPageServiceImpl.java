@@ -1,6 +1,7 @@
 package cat.wars.cms.manager.service.impl;
 
 import cat.wars.cms.framework.domain.cms.CmsPage;
+import cat.wars.cms.framework.domain.cms.CmsSite;
 import cat.wars.cms.framework.domain.cms.request.CmsQueryPageRequest;
 import cat.wars.cms.framework.domain.cms.response.CmsCode;
 import cat.wars.cms.framework.domain.cms.response.CmsConfigResult;
@@ -11,22 +12,34 @@ import cat.wars.cms.framework.model.response.QueryResponseResult;
 import cat.wars.cms.framework.model.response.QueryResult;
 import cat.wars.cms.framework.model.response.ResponseResult;
 import cat.wars.cms.manager.dao.CmsPageRepository;
+import cat.wars.cms.manager.dao.CmsSiteRepository;
 import cat.wars.cms.manager.service.CmsPageService;
 import cat.wars.cms.manager.service.CmsTemplateService;
+import com.alibaba.fastjson.JSON;
 import freemarker.cache.StringTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import org.apache.commons.io.IOUtils;
+import org.bson.types.ObjectId;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.*;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.util.Map;
 import java.util.Optional;
 
-import static org.apache.logging.log4j.util.Strings.isNotEmpty;
-import static org.springframework.util.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 
 /**
@@ -40,15 +53,24 @@ import static org.springframework.util.StringUtils.isEmpty;
 @Service
 public class CmsPageServiceImpl implements CmsPageService {
 
+    @Value("${spring.rabbitmq.params.exchange.page-release}")
+    private String EXCHANGE_ROUTING_CMS_PAGE_RELEASE;
+
     private final CmsPageRepository repository;
     private final CmsTemplateService templateService;
+    private final CmsSiteRepository siteRepository;
     private final RestTemplate restTemplate;
+    private final GridFsTemplate gridFsTemplate;
+    private final RabbitTemplate rabbitTemplate;
 
     @Autowired
-    public CmsPageServiceImpl(CmsPageRepository cmsPageRepository, RestTemplate restTemplate, CmsTemplateService templateService) {
+    public CmsPageServiceImpl(CmsPageRepository cmsPageRepository, RestTemplate restTemplate, CmsTemplateService templateService, CmsSiteRepository siteRepository, GridFsTemplate gridFsTemplate, RabbitTemplate rabbitTemplate) {
         this.repository = cmsPageRepository;
         this.restTemplate = restTemplate;
         this.templateService = templateService;
+        this.siteRepository = siteRepository;
+        this.gridFsTemplate = gridFsTemplate;
+        this.rabbitTemplate = rabbitTemplate;
     }
 
     @Override
@@ -113,10 +135,9 @@ public class CmsPageServiceImpl implements CmsPageService {
     @Override
     public CmsPage getById(String id) {
         // Filter request data
-        if (isEmpty(id)) ExceptionCast.cast(CmsCode.CMS_MANAGER_REQUEST_INVALID);
-
-        Optional<CmsPage> pageOptional = repository.findById(id);
-        if (pageOptional.isEmpty()) ExceptionCast.cast(CmsCode.CMS_MANAGER_PAGE_NOT_EXISTS);
+        Optional<CmsPage> pageOptional = null;
+        if (isEmpty(id) || (pageOptional = repository.findById(id)).isEmpty())
+            ExceptionCast.cast(CmsCode.CMS_MANAGER_REQUEST_INVALID);
 
         return pageOptional.get();
     }
@@ -183,6 +204,32 @@ public class CmsPageServiceImpl implements CmsPageService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public ResponseResult release(String id) {
+        CmsPage page = getById(id); // Get page
+        if (isEmpty(page.getPagePhysicalPath())) ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_PAGE_PHYSICALPATH_ISNULL);
+
+        if (isNotEmpty(page.getHtmlFileId())) // Delete the original
+            gridFsTemplate.delete(Query.query(Criteria.where("_id").is(page.getHtmlFileId())));
+        // Upload
+        String pageHtmlStr = getPageHtml(id);
+        InputStream pageHtmlStream = IOUtils.toInputStream(pageHtmlStr, Charset.forName("UTF-8"));
+        ObjectId objectId = gridFsTemplate.store(pageHtmlStream, page.getPageName());
+        /// Update page
+        page.setHtmlFileId(objectId.toString());
+        repository.save(page);
+
+        Optional<CmsSite> siteOptional = null;
+        if (isEmpty(page.getSiteId()) || (siteOptional = siteRepository.findById(page.getSiteId())).isEmpty())
+            ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_PAGE_SITE_ISNULL);
+        if (isEmpty(siteOptional.get().getSitePhysicalPath()))
+            ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_PAGE_SITEPHYSICALPATH_ISNULL);
+
+        // Push message
+        rabbitTemplate.convertAndSend(EXCHANGE_ROUTING_CMS_PAGE_RELEASE, page.getSiteId(), JSON.toJSON(Map.of("pageId", page.getPageId())));
+        return ResponseResult.SUCCESS();
     }
 
 }
