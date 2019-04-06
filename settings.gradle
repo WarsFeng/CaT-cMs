@@ -5,4 +5,5 @@ include 'cms-model'
 include 'cms-api'
 include 'cms-service-manager'
 include 'cms-service-manager-client'
+include 'cms-service-manager-course'
 
