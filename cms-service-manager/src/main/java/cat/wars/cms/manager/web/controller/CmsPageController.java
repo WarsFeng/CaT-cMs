@@ -67,7 +67,8 @@ public class CmsPageController implements CmsPageControllerApi {
     }
 
     @Override
-    public ResponseResult release(String id) {
+    @PostMapping("/release/{id}")
+    public ResponseResult release(@PathVariable(name = "id") String id) {
         return service.release(id);
     }
 }

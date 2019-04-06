@@ -177,6 +177,7 @@ public class CmsPageServiceImpl implements CmsPageService {
         return ResponseResult.SUCCESS();
     }
 
+    @Override
     public String getPageHtml(String id) {
         // Get page
         CmsPage page = getById(id);
@@ -228,7 +229,7 @@ public class CmsPageServiceImpl implements CmsPageService {
             ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_PAGE_SITEPHYSICALPATH_ISNULL);
 
         // Push message
-        rabbitTemplate.convertAndSend(EXCHANGE_ROUTING_CMS_PAGE_RELEASE, page.getSiteId(), JSON.toJSON(Map.of("pageId", page.getPageId())));
+        rabbitTemplate.convertAndSend(EXCHANGE_ROUTING_CMS_PAGE_RELEASE, page.getSiteId(), JSON.toJSONString(Map.of("pageId", page.getPageId())));
         return ResponseResult.SUCCESS();
     }
 

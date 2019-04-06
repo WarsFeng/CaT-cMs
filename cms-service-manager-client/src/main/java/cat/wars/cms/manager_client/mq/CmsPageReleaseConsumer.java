@@ -39,7 +39,7 @@ public class CmsPageReleaseConsumer {
      * @param message {@link Message}
      * @param channel {@link Channel}
      */
-    @RabbitListener(queues = {"${spring.rabbitmq.param.queue}"})
+    @RabbitListener(queues = {"${spring.rabbitmq.params.queue}"})
     public void pageRelease(Message message, Channel channel /*, @Header(AmqpHeaders.DELIVERY_TAG) long tag*/) {
         String msg = new String(message.getBody(), Charset.forName("UTF-8"));
         LOGGER.info("\nReceive page release message, msg: ({})", msg);
@@ -47,8 +47,8 @@ public class CmsPageReleaseConsumer {
         try {
             // If success, ack(multiple)
             if (cmsPageService.savePageToServerPath((String) msgMap.get("pageId"))) {
-                channel.basicAck(message.getMessageProperties().getDeliveryTag(), true);
-            }
+                channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+            } else channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, false);
         } catch (IOException e) {
             LOGGER.error("\nCms client page release consumer ack error", e);
         }

@@ -13,6 +13,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -49,11 +51,15 @@ public class CmsPageServiceImpl implements CmsPageService {
 
         // Save to server path
         /// Full path = sitePath + pagePath + pageName
-        String path = cmsSiteRepository.findById(page.getSiteId()).get().getSitePhysicalPath()
-                + page.getPagePhysicalPath() + page.getPageName();
+        String dirPath = cmsSiteRepository.findById(page.getSiteId()).get().getSitePhysicalPath() + File.separator
+                + page.getPagePhysicalPath();
+        String fullPath = dirPath + File.separator + page.getPageName();
         /// Save
         try {
-            IOUtils.copy(downloadStream, new FileOutputStream(path));
+            IOUtils.copy(downloadStream, new FileOutputStream(fullPath));
+        } catch (FileNotFoundException e) {
+            new File(dirPath).mkdirs();
+            savePageToServerPath(id);
         } catch (IOException e) {
             e.printStackTrace();
             return false;
