@@ -1,6 +1,6 @@
 package cat.wars.cms.framework.domain.course.ext;
 
-import cat.wars.cms.framework.domain.course.Teachplan;
+import cat.wars.cms.framework.domain.course.TeachPlan;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -11,7 +11,7 @@ import lombok.ToString;
 @Data
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class TeachplanExt extends Teachplan {
+public class TeachPlanExt extends TeachPlan {
 
     //媒资文件id
     private String mediaId;

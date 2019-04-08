@@ -2,7 +2,7 @@
   <div>
     <el-button type="primary" @click="teachplayFormVisible = true">添加课程计划</el-button>
     <el-tree
-      :data="teachplanList"
+      :data="teachPlanList"
       :props="defaultProps"
       node-key="id"
       default-expand-all
@@ -12,12 +12,12 @@
 
     <el-dialog title="添加课程计划" :visible.sync="teachplayFormVisible">
 
-      <el-form ref="teachplanForm" :model="teachplanActive" label-width="140px" style="width:600px;"
-               :rules="teachplanRules">
+      <el-form ref="teachPlanForm" :model="teachPlanActive" label-width="140px" style="width:600px;"
+               :rules="teachPlanRules">
         <el-form-item label="上级结点">
-          <el-select v-model="teachplanActive.parentid" placeholder="不填表示根结点">
+          <el-select v-model="teachPlanActive.parentid" placeholder="不填表示根结点">
             <el-option
-              v-for="item in teachplanList"
+              v-for="item in teachPlanList"
               :key="item.id"
               :label="item.pname"
               :value="item.id">
@@ -25,26 +25,26 @@
           </el-select>
         </el-form-item>
         <el-form-item label="章节/课时名称" prop="pname">
-          <el-input v-model="teachplanActive.pname" auto-complete="off"></el-input>
+          <el-input v-model="teachPlanActive.pname" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="课程类型">
-          <el-radio-group v-model="teachplanActive.ptype">
+          <el-radio-group v-model="teachPlanActive.ptype">
             <el-radio class="radio" label='1'>视频</el-radio>
             <el-radio class="radio" label='2'>文档</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="学习时长（分钟）  请输入数字">
-          <el-input type="number" v-model="teachplanActive.timelength" auto-complete="off"></el-input>
+          <el-input type="number" v-model="teachPlanActive.timelength" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="排序字段">
-          <el-input v-model="teachplanActive.orderby" auto-complete="off"></el-input>
+          <el-input v-model="teachPlanActive.orderby" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="章节/课时介绍" prop="description">
-          <el-input type="textarea" v-model="teachplanActive.description"></el-input>
+          <el-input type="textarea" v-model="teachPlanActive.description"></el-input>
         </el-form-item>
 
         <el-form-item label="状态" prop="status">
-          <el-radio-group v-model="teachplanActive.status">
+          <el-radio-group v-model="teachPlanActive.status">
             <el-radio class="radio" label="0">未发布</el-radio>
             <el-radio class="radio" label='1'>已发布</el-radio>
           </el-radio-group>
@@ -74,26 +74,12 @@
       return {
         mediaFormVisible: false,
         teachplayFormVisible: false,//控制添加窗口是否显示
-        teachplanList: [{
-          id: 1,
-          pname: '一级 1',
-          children: [{
-            id: 4,
-            pname: '二级 1-1',
-            children: [{
-              id: 9,
-              pname: '三级 1-1-1'
-            }, {
-              id: 10,
-              pname: '三级 1-1-2'
-            }]
-          }]
-        }],
+        teachPlanList: [],
         defaultProps: {
           children: 'children',
           label: 'pname'
         },
-        teachplanRules: {
+        teachPlanRules: {
           pname: [
             {required: true, message: '请输入课程计划名称', trigger: 'blur'}
           ],
@@ -101,30 +87,30 @@
             {required: true, message: '请选择状态', trigger: 'blur'}
           ]
         },
-        teachplanActive: {},
-        teachplanId: ''
+        teachPlanActive: {},
+        teachPlanId: ''
       }
     },
     methods: {
       //选择视频，打开窗口
       choosevideo(data) {
         //得到当前的课程计划
-        this.teachplanId = data.id
-//        alert(this.teachplanId)
+        this.teachPlanId = data.id
+//        alert(this.teachPlanId)
         this.mediaFormVisible = true;//打开窗口
       },
       //保存选择的视频
       choosemedia(mediaId, fileOriginalName, mediaUrl) {
         //保存视频到课程计划表中
-        let teachplanMedia = {}
-        teachplanMedia.mediaId = mediaId;
-        teachplanMedia.mediaFileOriginalName = fileOriginalName;
-        teachplanMedia.mediaUrl = mediaUrl;
-        teachplanMedia.courseId = this.courseid;
+        let teachPlanMedia = {}
+        teachPlanMedia.mediaId = mediaId;
+        teachPlanMedia.mediaFileOriginalName = fileOriginalName;
+        teachPlanMedia.mediaUrl = mediaUrl;
+        teachPlanMedia.courseId = this.courseid;
         //课程计划
-        teachplanMedia.teachplanId = this.teachplanId
+        teachPlanMedia.teachPlanId = this.teachPlanId
 
-        courseApi.savemedia(teachplanMedia).then(res => {
+        courseApi.savemedia(teachPlanMedia).then(res => {
           if (res.success) {
             this.$message.success("选择视频成功")
             //查询课程计划
@@ -137,12 +123,12 @@
       //提交课程计划
       addTeachplan() {
         //校验表单
-        this.$refs.teachplanForm.validate((valid) => {
+        this.$refs.teachPlanForm.validate((valid) => {
           if (valid) {
             //调用api方法
-            //将课程id设置到teachplanActive
-            this.teachplanActive.courseid = this.courseid
-            courseApi.addTeachplan(this.teachplanActive).then(res => {
+            //将课程id设置到teachPlanActive
+            this.teachPlanActive.courseid = this.courseid
+            courseApi.addTeachplan(this.teachPlanActive).then(res => {
               if (res.success) {
                 this.$message.success("添加成功")
                 //刷新树
@@ -157,7 +143,7 @@
       },
       //重置表单
       resetForm() {
-        this.teachplanActive = {}
+        this.teachPlanActive = {}
       },
 
       append(data) {
@@ -194,22 +180,25 @@
           </span>);
       },
       findTeachplan() {
-        this.teachplanList = []
+        this.teachPlanList = []
         //查询课程计划
+        this.courseid = '402885816243d2dd016243f24c030002';
         courseApi.findTeachplanList(this.courseid).then(res => {
-          if (res && res.children) {
-            this.teachplanList = res.children;
-          }
-
-
-        })
+          if (res.success && res.teachPlanNode.children) {
+            this.teachPlanList = res.teachPlanNode.children;
+          } else this.$message({
+            showClose: true,
+            message: '查询失败! ' + res.message,
+            type: 'error'
+          });
+        });
       }
     },
     mounted() {
       //课程id
       this.courseid = this.$route.params.courseid;
       //查询课程计划
-      // this.findTeachplan()
+      this.findTeachplan()
 
     }
   }

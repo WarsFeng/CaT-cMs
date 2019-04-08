@@ -13,10 +13,10 @@ import java.io.Serializable;
 @Data
 @ToString
 @Entity
-@Table(name = "teachplan")
+@Table(name = "teach_plan")
 @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
-public class Teachplan implements Serializable {
-    private static final long serialVersionUID = -916357110051689485L;
+public class TeachPlan implements Serializable {
+
     @Id
     @GeneratedValue(generator = "jpa-uuid")
     @Column(length = 32)
@@ -31,5 +31,4 @@ public class Teachplan implements Serializable {
     private Integer orderby;
     private Double timelength;
     private String trylearn;
-
 }

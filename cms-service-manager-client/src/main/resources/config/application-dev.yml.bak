@@ -1,0 +1,22 @@
+server:
+  port: 21000
+spring:
+  data:
+    # MongoDB
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: cms
+
+  # RabbitMQ
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username:
+    password:
+    virtual-host: /
+    params:
+      queue: queue_cms_page_release_01
+      routingkey: 5a751fab6abb5044e0d19ea1 # is current site id
+      exchange:
+        # Release page exchange
+        page-release: exchange_routing_cms_page_release

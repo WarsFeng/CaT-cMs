@@ -2,7 +2,7 @@ import http from './../../../base/api/public'
 import querystring from 'querystring'
 
 let sysConfig = require('@/../config/sysConfig')
-let apiUrl = sysConfig.xcApiUrlPre;
+let apiUrl = sysConfig.cmsApiUrlPre;
 
 //查询课程列表
 //我的课程列表

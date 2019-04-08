@@ -3,7 +3,7 @@ package cat.wars.cms.framework.domain.portalview;
 import cat.wars.cms.framework.domain.course.CourseBase;
 import cat.wars.cms.framework.domain.course.CourseMarket;
 import cat.wars.cms.framework.domain.course.CoursePic;
-import cat.wars.cms.framework.domain.course.ext.TeachplanNode;
+import cat.wars.cms.framework.domain.course.ext.TeachPlanNode;
 import cat.wars.cms.framework.domain.report.ReportCourse;
 import lombok.Data;
 import lombok.ToString;
@@ -25,7 +25,7 @@ public class PreViewCourse implements Serializable {
     private CourseBase courseBase;
     private CourseMarket courseMarket;
     private CoursePic coursePic;
-    private TeachplanNode teachplan;
+    private TeachPlanNode teachplan;
     //课程统计信息
     private ReportCourse reportCourse;
 

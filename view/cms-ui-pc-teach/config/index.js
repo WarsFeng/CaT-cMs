@@ -43,7 +43,7 @@ module.exports = {
       },
       '/api/course': {
         // target: 'http://localhost:3000/mock/11'
-        target: 'http://127.0.0.1:31200',
+        target: 'http://127.0.0.1:20100',
         pathRewrite: {
           '^/api': ''
         }
