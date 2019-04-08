@@ -19,8 +19,8 @@ spring:
   rabbitmq:
     host: localhost
     port: 5672
-    username: wars
-    password: Warscat
+    username:
+    password:
     virtual-host: /
     params:
       exchange:

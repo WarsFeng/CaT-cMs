@@ -157,3 +157,4 @@ typings/
 .next
 
 /dist/
+application-dev.yml
