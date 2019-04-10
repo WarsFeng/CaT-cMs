@@ -1,7 +1,9 @@
 package cat.wars.manager_course.web.controller;
 
 import cat.wars.cms.api.course.CourseControllerApi;
+import cat.wars.cms.framework.domain.course.TeachPlan;
 import cat.wars.cms.framework.domain.course.response.TeachPlanResponse;
+import cat.wars.cms.framework.model.response.ResponseResult;
 import cat.wars.manager_course.service.TeachPlanService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,5 +31,11 @@ public class CourseController implements CourseControllerApi {
     @GetMapping("/list/{courseId}")
     public TeachPlanResponse findTeachPlanList(@PathVariable(name = "courseId") String courseId) {
         return service.findTeachPlanList(courseId);
+    }
+
+    @Override
+    @GetMapping("/add")
+    public ResponseResult addTeachPlan(TeachPlan teachPlan) {
+        return null;
     }
 }

@@ -17,7 +17,7 @@ import java.io.Serializable;
 //@GenericGenerator(name = "jpa-assigned", strategy = "assigned")
 @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
 public class CourseBase implements Serializable {
-    private static final long serialVersionUID = -916357110051689486L;
+
     @Id
     @GeneratedValue(generator = "jpa-uuid")
     @Column(length = 32)
@@ -35,5 +35,4 @@ public class CourseBase implements Serializable {
     private String companyId;
     @Column(name = "user_id")
     private String userId;
-
 }

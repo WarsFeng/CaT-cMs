@@ -180,7 +180,7 @@
           </span>);
       },
       findTeachplan() {
-        this.teachPlanList = []
+        this.teachPlanList = [];
         //查询课程计划
         this.courseid = '402885816243d2dd016243f24c030002';
         courseApi.findTeachplanList(this.courseid).then(res => {
@@ -198,8 +198,7 @@
       //课程id
       this.courseid = this.$route.params.courseid;
       //查询课程计划
-      this.findTeachplan()
-
+      this.findTeachplan();
     }
   }
 </script>
