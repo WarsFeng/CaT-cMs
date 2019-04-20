@@ -97,10 +97,10 @@
       },
       handleCurrentChange(val) {
         this.params.page = val;
-        this.getCourse();
+        this.getCourseList();
       },
       //获取课程列表
-      getCourse() {
+      getCourseList() {
         let para = {
           page: this.params.page,
           name: this.params.name
@@ -140,7 +140,7 @@
               message: '删除成功',
               type: 'success'
             });
-            this.getCourse();
+            this.getCourseList();
           });
         }).catch(() => {
 
@@ -158,7 +158,7 @@
       this.params.page = Number.parseInt(this.$route.query.page || 1);
     },
     mounted() {
-      this.getCourse();
+      this.getCourseList();
     }
   }
 </script>

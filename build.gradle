@@ -58,7 +58,7 @@ allprojects {
 
 // Config
 subprojects {
-    apply plugin: "org.springframework.boot"
+//    apply plugin: "org.springframework.boot"
     apply plugin: "io.spring.dependency-management"
 
     def defaultEncoding = "UTF-8"
@@ -75,15 +75,16 @@ subprojects {
         include "**/model/**", "**/controller/**", "**/usecase/**", "**/util/**", "**/context/**"
     }
 
-    springBoot {
-        buildInfo()
-    }
+//    springBoot {
+//        buildInfo()
+//    }
 
     // Version ctl
     dependencyManagement {
         imports {
             mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
             mavenBom "org.springframework.cloud:spring-cloud-dependencies:${spring_cloud_version}"
+
         }
         dependencies {
             dependency "org.projectlombok:lombok:${lombok_version}"

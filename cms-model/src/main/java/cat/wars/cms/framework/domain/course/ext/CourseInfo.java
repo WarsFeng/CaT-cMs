@@ -15,5 +15,4 @@ public class CourseInfo extends CourseBase {
 
     //课程图片
     private String pic;
-
 }

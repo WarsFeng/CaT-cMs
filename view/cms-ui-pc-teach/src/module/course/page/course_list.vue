@@ -1,7 +1,13 @@
 <template>
   <section>
     <el-row>
-      <el-col :xl="{span: 3, offset: 1}">
+      <el-col
+        :xl="{span: 2, offset: 0}"
+        :lg="{span: 3, offset: 1}"
+        :md="{span: 5, offset: 1}"
+        :sm="{span: 7, offset: 1}"
+        :xs="{span: 11, offset: 1}"
+      >
         <el-card :body-style="{ padding: '2px' }">
           <img src="/static/images/add.jpg" class="image">
           <div style="padding: 10px;">
@@ -15,7 +21,13 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :xl="{span: 3, offset: 1}" v-for="(course, index) in courses" :key="course.id">
+      <el-col
+        :xl="{span: 2, offset: 0}"
+        :lg="{span: 3, offset: 1}"
+        :md="{span: 5, offset: 1}"
+        :sm="{span: 7, offset: 1}"
+        :xs="{span: 11, offset: 1}"
+        v-for="(course, index) in courses" :key="course.id">
         <el-card :body-style="{ padding: '2px' }">
           <!--          <img :src="course.pic!=null?imgUrl+course.pic:'/static/images/nonepic.jpg'" class="image" height="280px">-->
           <img src="/static/images/nonepic.jpg" class="image">
@@ -89,10 +101,10 @@
       //分页方法
       handleCurrentChange(val) {
         this.page = val;
-        this.getCourse();
+        this.getCourseList();
       },
       //获取课程列表
-      getCourse() {
+      getCourseList() {
         courseApi.findCourseList(this.page, this.size, {}).then((res) => {
           console.log(res);
           if (res.success) {
@@ -113,7 +125,7 @@
     },
     mounted() {
       //查询我的课程
-      this.getCourse();
+      this.getCourseList();
     }
   }
 </script>

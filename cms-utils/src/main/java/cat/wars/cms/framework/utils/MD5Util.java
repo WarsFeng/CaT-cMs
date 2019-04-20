@@ -119,7 +119,7 @@ public class MD5Util {
      *
      * @param str the string
      * @return md5串
-     * @throws IOException
+     * @throws
      */
     public static String getStringMD5(String str) {
         StringBuilder sb = new StringBuilder();

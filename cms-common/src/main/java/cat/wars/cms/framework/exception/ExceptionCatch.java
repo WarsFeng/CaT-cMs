@@ -35,7 +35,7 @@ public class ExceptionCatch {
 
     @ResponseBody
     @ExceptionHandler(Exception.class)
-    public ResponseResult exception(CustomException e) {
+    public ResponseResult exception(Exception e) {
         log.error("Catch exception {}\nexception: ", e.getMessage(), e);
         if (null == EXCEPTIONS) EXCEPTIONS = builder.build();
 
