@@ -1,4 +1,4 @@
-package cat.wars.manager_course.dao;
+package cat.wars.cms.manager_course.dao;
 
 import cat.wars.cms.framework.domain.course.CourseBase;
 import org.springframework.data.jpa.repository.JpaRepository;

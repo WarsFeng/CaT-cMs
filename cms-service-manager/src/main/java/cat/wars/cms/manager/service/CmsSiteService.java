@@ -1,5 +1,6 @@
 package cat.wars.cms.manager.service;
 
+import cat.wars.cms.framework.domain.cms.CmsSite;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
 
 /**
@@ -19,5 +20,5 @@ public interface CmsSiteService {
      * @param query site name
      * @return cat.wars.cms.framework.model.response.QueryResponseResult
      */
-    QueryResponseResult findSubList(String query);
+    QueryResponseResult<CmsSite> findSubList(String query);
 }

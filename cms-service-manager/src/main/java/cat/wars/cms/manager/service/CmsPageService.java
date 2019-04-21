@@ -24,7 +24,7 @@ public interface CmsPageService {
      * @param request param, {@link CmsQueryPageRequest}
      * @return cat.wars.cms.framework.model.response.QueryResponseResult
      */
-    QueryResponseResult findList(int page, int size, CmsQueryPageRequest request);
+    QueryResponseResult<CmsPage> findList(int page, int size, CmsQueryPageRequest request);
 
     /**
      * Add page

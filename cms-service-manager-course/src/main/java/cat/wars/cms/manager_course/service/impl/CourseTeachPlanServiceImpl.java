@@ -1,4 +1,4 @@
-package cat.wars.manager_course.service.impl;
+package cat.wars.cms.manager_course.service.impl;
 
 import cat.wars.cms.framework.domain.course.CourseBase;
 import cat.wars.cms.framework.domain.course.TeachPlan;
@@ -8,10 +8,10 @@ import cat.wars.cms.framework.domain.course.response.TeachPlanResponse;
 import cat.wars.cms.framework.exception.ExceptionCast;
 import cat.wars.cms.framework.model.response.CommonCode;
 import cat.wars.cms.framework.model.response.ResponseResult;
-import cat.wars.manager_course.dao.CourseRepository;
-import cat.wars.manager_course.dao.TeachPlanMapper;
-import cat.wars.manager_course.dao.TeachPlanRepository;
-import cat.wars.manager_course.service.TeachPlanService;
+import cat.wars.cms.manager_course.dao.CourseRepository;
+import cat.wars.cms.manager_course.dao.CourseTeachPlanMapper;
+import cat.wars.cms.manager_course.dao.CourseTeachPlanRepository;
+import cat.wars.cms.manager_course.service.CourseTeachPlanService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -27,13 +27,13 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
  */
 
 @Service
-public class TeachPlanServiceImpl implements TeachPlanService {
+public class CourseTeachPlanServiceImpl implements CourseTeachPlanService {
 
-    private final TeachPlanMapper mapper;
-    private final TeachPlanRepository repository;
+    private final CourseTeachPlanMapper mapper;
+    private final CourseTeachPlanRepository repository;
     private final CourseRepository courseRepository;
 
-    public TeachPlanServiceImpl(TeachPlanMapper mapper, TeachPlanRepository repository, CourseRepository courseRepository) {
+    public CourseTeachPlanServiceImpl(CourseTeachPlanMapper mapper, CourseTeachPlanRepository repository, CourseRepository courseRepository) {
         this.mapper = mapper;
         this.repository = repository;
         this.courseRepository = courseRepository;
@@ -44,6 +44,7 @@ public class TeachPlanServiceImpl implements TeachPlanService {
         if (isEmpty(courseId)) ExceptionCast.cast(CourseCode.COURSE_PUBLISH_COURSEIDISNULL);
 
         TeachPlanNode teachPlanNode = mapper.findNodeList(courseId);
+
         return new TeachPlanResponse(CommonCode.SUCCESS, teachPlanNode);
     }
 
@@ -65,6 +66,7 @@ public class TeachPlanServiceImpl implements TeachPlanService {
             teachPlan.setCourseid(courseId);
             teachPlan = repository.save(teachPlan);
         } else teachPlan = teachPlanOptional.get();
+
         return teachPlan.getId();
     }
 

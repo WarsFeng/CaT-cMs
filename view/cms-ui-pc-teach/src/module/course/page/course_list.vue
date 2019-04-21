@@ -43,14 +43,24 @@
 
       <!--分页-->
       <el-col :span="24" class="toolbar">
-        <el-pagination background layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="size"
-                       :total="total" :current-page="page"
-                       style="float:right;">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page=page
+          :page-sizes="[sizeConst, sizeConst*2, sizeConst*3, sizeConst*4,sizeConst*5]"
+          :page-size=size
+          layout="total, sizes, prev, pager, next, jumper"
+          :total=total
+          :pager-count="11"
+          style="text-align: center"
+          background
+        >
         </el-pagination>
       </el-col>
     </el-row>
   </section>
 </template>
+
 <script>
   import * as courseApi from '../api/course';
 
@@ -59,45 +69,20 @@
     data() {
       return {
         page: 1,
-        size: 7,
+        size: 20,
+        sizeConst: 20,
         total: 0,
-        courses: [
-          {
-            id: 'test01',
-            name: 'test01',
-            pic: ''
-          },
-          {
-            id: 'test02',
-            name: 'test02',
-            pic: ''
-          },
-          {
-            id: 'test03',
-            name: 'test03',
-            pic: ''
-          },
-          {
-            id: 'test04',
-            name: 'test04',
-            pic: ''
-          },
-          {
-            id: 'test05',
-            name: 'test05',
-            pic: ''
-          },
-          {
-            id: 'test06',
-            name: 'test06',
-            pic: ''
-          }
-        ],
+        courses: [],
         sels: [],//列表选中列
         imgUrl: sysConfig.imgUrl
       }
     },
     methods: {
+      // Size change
+      handleSizeChange(size) {
+        this.size = size;
+        this.getCourseList();
+      },
       //分页方法
       handleCurrentChange(val) {
         this.page = val;
@@ -106,16 +91,13 @@
       //获取课程列表
       getCourseList() {
         courseApi.findCourseList(this.page, this.size, {}).then((res) => {
-          console.log(res);
           if (res.success) {
             this.total = res.queryResult.total;
             this.courses = res.queryResult.list;
           }
-
         });
       },
       handleManage: function (id) {
-        console.log(id)
         this.$router.push({path: '/course/manager/' + id})
       }
 
@@ -129,6 +111,7 @@
     }
   }
 </script>
+
 <style scoped>
   .el-col-8 {
     width: 20%

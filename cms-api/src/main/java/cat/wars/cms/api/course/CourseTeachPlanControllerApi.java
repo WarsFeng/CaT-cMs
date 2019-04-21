@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiOperation;
  */
 
 @Api("Course manager teach plan api")
-public interface TeachPlanControllerApi {
+public interface CourseTeachPlanControllerApi {
 
     @ApiOperation("Query teach plan")
     @ApiImplicitParam(name = "id", value = "course id", required = true, paramType = "path", dataType = "string")

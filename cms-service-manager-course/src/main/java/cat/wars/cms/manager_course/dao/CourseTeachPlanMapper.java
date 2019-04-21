@@ -1,4 +1,4 @@
-package cat.wars.manager_course.dao;
+package cat.wars.cms.manager_course.dao;
 
 import cat.wars.cms.framework.domain.course.ext.TeachPlanNode;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 
 @Mapper
-public interface TeachPlanMapper {
+public interface CourseTeachPlanMapper {
 
     TeachPlanNode findNodeList(String courseId);
 }

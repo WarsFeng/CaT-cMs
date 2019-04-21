@@ -182,7 +182,6 @@
       findTeachplan() {
         this.teachPlanList = [];
         //查询课程计划
-        this.courseid = '402885816243d2dd016243f24c030002';
         courseApi.findTeachplanList(this.courseid).then(res => {
           if (res.success && res.teachPlanNode.children) {
             this.teachPlanList = res.teachPlanNode.children;

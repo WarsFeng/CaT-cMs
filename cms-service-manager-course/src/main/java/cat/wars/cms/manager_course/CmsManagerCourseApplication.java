@@ -1,4 +1,4 @@
-package cat.wars.manager_course;
+package cat.wars.cms.manager_course;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,9 +15,10 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EntityScan(basePackages = "cat.wars.cms.framework.domain")
 @ComponentScan(basePackages = {
-        "cat.wars.manager_course"
-        , "cat.wars.cms.framework" // Swagger api
-        , "cat.wars.cms.api.course" // Exception...
+        "cat.wars.cms.manager_course"
+        , "cat.wars.cms.api.course" // Swagger api
+        , "cat.wars.cms.framework" // Exception...
+        , "cat.wars.cms.api.config" // Exception...
 })
 public class CmsManagerCourseApplication {
 

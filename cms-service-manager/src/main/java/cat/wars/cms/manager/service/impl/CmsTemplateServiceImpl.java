@@ -55,7 +55,7 @@ public class CmsTemplateServiceImpl implements CmsTemplateService {
     }
 
     @Override
-    public QueryResponseResult findSubList(String siteId, String query) {
+    public QueryResponseResult<CmsTemplate> findSubList(String siteId, String query) {
         // Limit 10
         PageRequest pageable = PageRequest.of(0, 10);
         // Site not exists
@@ -83,7 +83,7 @@ public class CmsTemplateServiceImpl implements CmsTemplateService {
         QueryResult<CmsTemplate> queryResult = new QueryResult<>();
         queryResult.setTotal(pages.getTotalElements());
         queryResult.setList(templateList);
-        return new QueryResponseResult(CommonCode.SUCCESS, queryResult);
+        return new QueryResponseResult<>(CommonCode.SUCCESS, queryResult);
     }
 
     @Override

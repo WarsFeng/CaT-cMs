@@ -1,4 +1,4 @@
-package cat.wars.manager_course.dao;
+package cat.wars.cms.manager_course.dao;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,10 +10,10 @@ import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TeachPlanRepositoryTest {
+public class CourseTeachPlanRepositoryTest {
 
     @Autowired
-    private TeachPlanRepository repository;
+    private CourseTeachPlanRepository repository;
 
     @Test
     public void testExists() {

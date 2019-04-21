@@ -1,6 +1,7 @@
 package cat.wars.cms.manager.web.controller;
 
 import cat.wars.cms.api.cms.CmsTemplateControllerApi;
+import cat.wars.cms.framework.domain.cms.CmsTemplate;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
 import cat.wars.cms.manager.service.CmsTemplateService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +32,8 @@ public class CmsTemplateController implements CmsTemplateControllerApi {
 
     @Override
     @GetMapping("/sublist")
-    public QueryResponseResult findSubList(String siteId, String query) {
-        log.info("\nQuery subTemplate list, siteId({}), query({})");
+    public QueryResponseResult<CmsTemplate> findSubList(String siteId, String query) {
+        log.info("\nQuery subTemplate list, siteId({}), query({})", siteId, query);
         return service.findSubList(siteId, query);
     }
 }

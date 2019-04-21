@@ -26,7 +26,7 @@ public interface CmsPageControllerApi {
             @ApiImplicitParam(name = "page", value = "page num", required = true, paramType = "path", dataType = "int")
             , @ApiImplicitParam(name = "size", value = "page size", required = true, paramType = "path", dataType = "int")
     })
-    QueryResponseResult findList(int page, int size, CmsQueryPageRequest params);
+    QueryResponseResult<CmsPage> findList(int page, int size, CmsQueryPageRequest params);
 
     @ApiOperation("Add page")
     CmsPageResult add(CmsPage page);

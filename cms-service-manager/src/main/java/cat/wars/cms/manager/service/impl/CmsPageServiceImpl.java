@@ -74,7 +74,7 @@ public class CmsPageServiceImpl implements CmsPageService {
     }
 
     @Override
-    public QueryResponseResult findList(int page, int size, CmsQueryPageRequest request) {
+    public QueryResponseResult<CmsPage> findList(int page, int size, CmsQueryPageRequest request) {
         // Page, size process
         if (1 > page) page = 1;
         if (1 > size) size = 15;
@@ -111,7 +111,7 @@ public class CmsPageServiceImpl implements CmsPageService {
         QueryResult<CmsPage> queryResult = new QueryResult<>();
         queryResult.setList(pages.getContent());
         queryResult.setTotal(pages.getTotalElements());
-        return new QueryResponseResult(CommonCode.SUCCESS, queryResult);
+        return new QueryResponseResult<>(CommonCode.SUCCESS, queryResult);
     }
 
     @Override

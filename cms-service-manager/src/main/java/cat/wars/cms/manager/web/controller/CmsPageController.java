@@ -33,7 +33,7 @@ public class CmsPageController implements CmsPageControllerApi {
 
     @Override
     @GetMapping("/list/{page}/{size}")
-    public QueryResponseResult findList(@PathVariable(name = "page") int page
+    public QueryResponseResult<CmsPage> findList(@PathVariable(name = "page") int page
             , @PathVariable(name = "size") int size, CmsQueryPageRequest params) {
         log.info("\nQuery page list, page({}), size({}), params(\n\t{}\n)", page, size, params);
         return service.findList(page, size, params);

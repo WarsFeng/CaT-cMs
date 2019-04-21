@@ -1,5 +1,6 @@
 package cat.wars.cms.api.cms;
 
+import cat.wars.cms.framework.domain.cms.CmsTemplate;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -22,5 +23,5 @@ public interface CmsTemplateControllerApi {
             @ApiImplicitParam(name = "siteId", value = "Site id", paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "query", value = "Template name", paramType = "query", dataType = "string")
     })
-    QueryResponseResult findSubList(String siteId, String query);
+    QueryResponseResult<CmsTemplate> findSubList(String siteId, String query);
 }

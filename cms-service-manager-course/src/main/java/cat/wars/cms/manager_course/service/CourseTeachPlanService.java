@@ -1,4 +1,4 @@
-package cat.wars.manager_course.service;
+package cat.wars.cms.manager_course.service;
 
 import cat.wars.cms.framework.domain.course.TeachPlan;
 import cat.wars.cms.framework.domain.course.response.TeachPlanResponse;
@@ -12,7 +12,7 @@ import cat.wars.cms.framework.model.response.ResponseResult;
  * Course teach plan service
  */
 
-public interface TeachPlanService {
+public interface CourseTeachPlanService {
 
     /**
      * Query course teach plan

@@ -1,6 +1,7 @@
 package cat.wars.cms.manager.web.controller;
 
 import cat.wars.cms.api.cms.CmsSiteControllerApi;
+import cat.wars.cms.framework.domain.cms.CmsSite;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
 import cat.wars.cms.manager.service.CmsSiteService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +32,7 @@ public class CmsSiteController implements CmsSiteControllerApi {
 
     @Override
     @GetMapping("/sublist")
-    public QueryResponseResult findSubList(String siteName) {
+    public QueryResponseResult<CmsSite> findSubList(String siteName) {
         log.info("\nQuery subsite list, siteName({})", siteName);
         return service.findSubList(siteName);
     }

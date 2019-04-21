@@ -33,7 +33,7 @@ public class CmsSiteServiceImpl implements CmsSiteService {
     }
 
     @Override
-    public QueryResponseResult findSubList(String query) {
+    public QueryResponseResult<CmsSite> findSubList(String query) {
         // Limit 10 and sort
         PageRequest pageable = PageRequest.of(0, 10, Sort.Direction.DESC, "siteCreateTime");
         // Query
@@ -59,6 +59,6 @@ public class CmsSiteServiceImpl implements CmsSiteService {
         QueryResult<CmsSite> queryResult = new QueryResult<>();
         queryResult.setTotal(pages.getTotalElements());
         queryResult.setList(siteList);
-        return new QueryResponseResult(CommonCode.SUCCESS, queryResult);
+        return new QueryResponseResult<>(CommonCode.SUCCESS, queryResult);
     }
 }

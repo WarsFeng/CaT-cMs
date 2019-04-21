@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cat.wars.manager_course.dao.TeachPlanMapper">
+<mapper namespace="cat.wars.cms.manager_course.dao.CourseTeachPlanMapper">
     <resultMap id="teachPlanMap" type="cat.wars.cms.framework.domain.course.ext.TeachPlanNode">
         <id property="id" column="one_id"/>
         <result property="pname" column="one_pname"/>

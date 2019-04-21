@@ -8,9 +8,9 @@ let apiUrl = sysConfig.cmsApiUrlPre;
 //我的课程列表
 export const findCourseList = (page, size, params) => {
 //使用工具类将json对象转成key/value
-  let queries = querystring.stringify(params)
-  return http.requestQuickGet(apiUrl + "/course/coursebase/list/" + page + "/" + size + "?" + queries)
-}
+  let queries = querystring.stringify(params);
+  return http.requestQuickGet(apiUrl + "/course/list/" + page + "/" + size + "?" + queries)
+};
 
 //查询课程分类
 export const category_findlist = () => {

@@ -21,7 +21,7 @@ public interface CmsTemplateService {
      * @param query  template name
      * @return cat.wars.cms.framework.model.response.QueryResponseResult
      */
-    QueryResponseResult findSubList(String siteId, String query);
+    QueryResponseResult<CmsTemplate> findSubList(String siteId, String query);
 
     /**
      * Get template by id, if return, always not null
