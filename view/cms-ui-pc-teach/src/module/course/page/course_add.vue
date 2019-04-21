@@ -107,21 +107,26 @@
     mounted() {
       // 查询课程分类
       courseApi.category_findlist().then(res => {
-        this.categoryList = res.children;
-        console.log(this.categoryList)
-
-      })
+        if (res.success) {
+          let root_node = res.queryResult.list[0];
+          console.log(root_node)
+          this.categoryList = root_node.children;
+          console.log(this.categoryList)
+        }
+      });
 
       //查询数据字典
       //查询课程等级
       systemApi.sys_getDictionary("200").then(res => {
-
-        this.gradeList = res.dvalue;
-      })
+        if (res.success) {
+          this.gradeList = res.sysDictionary.dvalue;
+        }
+      });
       //查询学习模式
       systemApi.sys_getDictionary("201").then(res => {
-
-        this.studymodelList = res.dvalue;
+        if (res.success) {
+          this.studymodelList = res.sysDictionary.dvalue;
+        }
       })
 
     }

@@ -1,11 +1,16 @@
 package cat.wars.cms.manager_course.service.impl;
 
+import cat.wars.cms.framework.domain.course.CourseBase;
 import cat.wars.cms.framework.domain.course.ext.CourseInfo;
 import cat.wars.cms.framework.domain.course.request.CourseListRequest;
+import cat.wars.cms.framework.domain.course.response.CourseCode;
+import cat.wars.cms.framework.exception.ExceptionCast;
 import cat.wars.cms.framework.model.response.CommonCode;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
 import cat.wars.cms.framework.model.response.QueryResult;
+import cat.wars.cms.framework.model.response.ResponseResult;
 import cat.wars.cms.manager_course.dao.CourseMapper;
+import cat.wars.cms.manager_course.dao.CourseRepository;
 import cat.wars.cms.manager_course.service.CourseService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -24,9 +29,11 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 public class CourseServiceImpl implements CourseService {
 
     private final CourseMapper mapper;
+    private final CourseRepository repository;
 
-    public CourseServiceImpl(CourseMapper mapper) {
+    public CourseServiceImpl(CourseMapper mapper, CourseRepository repository) {
         this.mapper = mapper;
+        this.repository = repository;
     }
 
     @Override
@@ -45,5 +52,20 @@ public class CourseServiceImpl implements CourseService {
         // Result
         QueryResult<CourseInfo> queryResult = new QueryResult<>(pages.getResult(), pages.getTotal());
         return new QueryResponseResult<>(CommonCode.SUCCESS, queryResult);
+    }
+
+    @Override
+    public ResponseResult add(CourseBase course) {
+        // Filter data
+        if (isEmpty(course.getName()) || isEmpty(course.getGrade()) || isEmpty(course.getStudymodel()))
+            ExceptionCast.cast(CourseCode.COURSE_ADD_INPUT_FIL);
+
+        // Save
+        course.setId(null);
+        course.setStatus("202001"); // Unpublished
+        repository.save(course);
+
+        // Result
+        return ResponseResult.SUCCESS();
     }
 }

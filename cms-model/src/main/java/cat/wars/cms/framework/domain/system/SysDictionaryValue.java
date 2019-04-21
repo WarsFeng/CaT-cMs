@@ -19,5 +19,4 @@ public class SysDictionaryValue {
 
     @Field("sd_status")
     private String sdStatus;
-
 }

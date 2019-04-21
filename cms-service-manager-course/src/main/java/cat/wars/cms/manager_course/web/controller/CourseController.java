@@ -1,15 +1,14 @@
 package cat.wars.cms.manager_course.web.controller;
 
 import cat.wars.cms.api.course.CourseControllerApi;
+import cat.wars.cms.framework.domain.course.CourseBase;
 import cat.wars.cms.framework.domain.course.ext.CourseInfo;
 import cat.wars.cms.framework.domain.course.request.CourseListRequest;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
+import cat.wars.cms.framework.model.response.ResponseResult;
 import cat.wars.cms.manager_course.service.CourseService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -35,5 +34,11 @@ public class CourseController implements CourseControllerApi {
     public QueryResponseResult<CourseInfo> findList(@PathVariable(name = "page") int page
             , @PathVariable(name = "size") int size, CourseListRequest params) {
         return service.findList(page, size, params);
+    }
+
+    @Override
+    @PostMapping("/add")
+    public ResponseResult add(@RequestBody CourseBase course) {
+        return service.add(course);
     }
 }

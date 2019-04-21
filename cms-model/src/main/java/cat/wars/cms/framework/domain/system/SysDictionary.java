@@ -27,5 +27,4 @@ public class SysDictionary {
 
     @Field("d_value")
     private List<SysDictionaryValue> dValue;
-
 }

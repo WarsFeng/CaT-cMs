@@ -4,6 +4,7 @@
     <resultMap id="categoryNodeMap" type="cat.wars.cms.framework.domain.course.ext.CategoryNode">
         <result column="a_name" property="name"/>
         <collection property="children" ofType="cat.wars.cms.framework.domain.course.ext.CategoryNode">
+            <id column="b_id" property="id"/>
             <result column="b_name" property="name"/>
             <collection property="children" ofType="cat.wars.cms.framework.domain.course.ext.CategoryNode">
                 <id column="c_id" property="id"/>
@@ -14,6 +15,7 @@
 
     <select id="findNodeList" parameterType="string" resultMap="categoryNodeMap">
         SELECT a.name a_name
+        , b.id b_id
         , b.name b_name
         , c.id c_id
         , c.name c_name

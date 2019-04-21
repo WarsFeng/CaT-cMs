@@ -14,11 +14,11 @@ export const findCourseList = (page, size, params) => {
 
 //查询课程分类
 export const category_findlist = () => {
-  return http.requestQuickGet(apiUrl + '/category/list')
-}
+  return http.requestQuickGet(apiUrl + '/course/category/list')
+};
 /*添加课程基础信息*/
 export const addCourseBase = params => {
-  return http.requestPost(apiUrl + '/course/coursebase/add', params)
+  return http.requestPost(apiUrl + '/course/add', params)
 }
 /*查询课程计划*/
 export const findTeachplanList = courseid => {
