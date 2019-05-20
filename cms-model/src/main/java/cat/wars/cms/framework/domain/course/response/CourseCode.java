@@ -21,7 +21,8 @@ public enum CourseCode implements ResultCode {
     COURSE_MEDIS_NAMEISNULL(false, 31102, "选择的媒资文件名称为空！"),
     COURSE_DICTIONARY_TYPE_ISNULL(false, 31103, "类型为空！"),
     COURSE_DICTIONARY_TYPE_NOT_EXISTS(false, 31104, "类型不存在！"),
-    COURSE_ADD_INPUT_FIL(false, 31105, "课程输入信息有误！");
+    COURSE_ADD_INPUT_FIL(false, 31105, "课程输入信息有误！"),
+    COURSE_NOT_EXISTS(false, 31106, "课程不存在");
 
     //操作代码
     @ApiModelProperty(value = "操作是否成功", example = "true", required = true)

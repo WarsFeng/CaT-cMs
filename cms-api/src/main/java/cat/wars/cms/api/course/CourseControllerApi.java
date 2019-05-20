@@ -2,6 +2,7 @@ package cat.wars.cms.api.course;
 
 import cat.wars.cms.framework.domain.course.CourseBase;
 import cat.wars.cms.framework.domain.course.request.CourseListRequest;
+import cat.wars.cms.framework.domain.course.response.CourseResponse;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
 import cat.wars.cms.framework.model.response.ResponseResult;
 import io.swagger.annotations.Api;
@@ -28,4 +29,11 @@ public interface CourseControllerApi {
 
     @ApiOperation("Add course")
     ResponseResult add(CourseBase course);
+
+    @ApiOperation("Query course by id")
+    @ApiImplicitParam(name = "id", value = "course id", required = true, paramType = "path", dataType = "string")
+    CourseResponse getById(String id);
+
+    @ApiOperation("Update course")
+    ResponseResult edit(String id, CourseBase course);
 }

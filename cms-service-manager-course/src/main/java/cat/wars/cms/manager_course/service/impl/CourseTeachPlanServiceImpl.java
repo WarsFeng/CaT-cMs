@@ -13,6 +13,7 @@ import cat.wars.cms.manager_course.dao.CourseTeachPlanMapper;
 import cat.wars.cms.manager_course.dao.CourseTeachPlanRepository;
 import cat.wars.cms.manager_course.service.CourseTeachPlanService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -71,6 +72,7 @@ public class CourseTeachPlanServiceImpl implements CourseTeachPlanService {
     }
 
     @Override
+    @Transactional
     public ResponseResult add(TeachPlan teachPlan) {
         // Verify data
         if (isEmpty(teachPlan.getCourseid()) || isEmpty(teachPlan.getPname()) || isEmpty(teachPlan.getStatus()))

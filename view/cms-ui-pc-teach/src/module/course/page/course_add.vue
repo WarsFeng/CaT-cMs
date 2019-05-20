@@ -7,7 +7,7 @@
       <el-form-item label="适用人群" prop="users">
         <el-input type="textarea" v-model="courseForm.users" auto-complete="off"></el-input>
       </el-form-item>
-      <el-form-item label="课程分类" prop="categoryActive">
+      <el-form-item label="课程分类" prop="st">
         <el-cascader
           expand-trigger="hover"
           :options="categoryList"
@@ -33,7 +33,7 @@
 
     </el-form>
     <div slot="footer" class="dialog-footer">
-      <el-button type="primary" @click.native="save">提交</el-button>
+      <el-button type="primary" @click.native="save('courseForm')">提交</el-button>
     </div>
   </div>
 </template>
@@ -69,7 +69,7 @@
           name: [
             {required: true, message: '请输入课程名称', trigger: 'blur'}
           ],
-          category: [
+          st: [
             {required: true, message: '请选择课程分类', trigger: 'blur'}
           ],
           grade: [
@@ -84,21 +84,28 @@
     },
     methods: {
       //新增课程提交
-      save() {
+      save(formName) {
         //处理课程分类
         // 选择课程分类存储到categoryActive
         this.courseForm.mt = this.categoryActive[0]//大分类
         this.courseForm.st = this.categoryActive[1]//小分类
-        courseApi.addCourseBase(this.courseForm).then(res => {
-          if (res.success) {
-            this.$message.success("提交成功")
-            //跳转到我的课程
-            this.$router.push({path: '/course/list'})
-          } else {
-            this.$message.error(res.message)
-          }
 
-        })
+        // Form validate
+        this.$refs[formName].validate((valid) => {
+          console.log(valid);
+          if (!valid) return false;
+          // Save
+          courseApi.addCourseBase(this.courseForm).then(res => {
+            if (res.success) {
+              this.$message.success("提交成功")
+              //跳转到我的课程
+              this.$router.push({path: '/course/list'})
+            } else {
+              this.$message.error(res.message)
+            }
+
+          })
+        });
       }
     },
     created() {

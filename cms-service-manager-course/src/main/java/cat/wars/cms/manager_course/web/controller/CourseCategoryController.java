@@ -4,6 +4,7 @@ import cat.wars.cms.api.course.CourseCategoryControllerApi;
 import cat.wars.cms.framework.domain.course.ext.CategoryNode;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
 import cat.wars.cms.manager_course.service.CourseCategoryService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Course category controller
  */
 
+@Slf4j
 @RestController
 @RequestMapping("/course/category")
 public class CourseCategoryController implements CourseCategoryControllerApi {
@@ -29,6 +31,7 @@ public class CourseCategoryController implements CourseCategoryControllerApi {
     @Override
     @GetMapping("/list")
     public QueryResponseResult<CategoryNode> findCategoryNodeList(String categoryName) {
+        log.info("Query category node list, categoryName({})", categoryName);
         return service.findCategoryNodeList(categoryName);
     }
 }

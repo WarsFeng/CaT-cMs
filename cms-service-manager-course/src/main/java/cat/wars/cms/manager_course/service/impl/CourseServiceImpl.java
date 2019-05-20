@@ -4,6 +4,7 @@ import cat.wars.cms.framework.domain.course.CourseBase;
 import cat.wars.cms.framework.domain.course.ext.CourseInfo;
 import cat.wars.cms.framework.domain.course.request.CourseListRequest;
 import cat.wars.cms.framework.domain.course.response.CourseCode;
+import cat.wars.cms.framework.domain.course.response.CourseResponse;
 import cat.wars.cms.framework.exception.ExceptionCast;
 import cat.wars.cms.framework.model.response.CommonCode;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
@@ -15,6 +16,9 @@ import cat.wars.cms.manager_course.service.CourseService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
@@ -55,6 +59,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Transactional
     public ResponseResult add(CourseBase course) {
         // Filter data
         if (isEmpty(course.getName()) || isEmpty(course.getGrade()) || isEmpty(course.getStudymodel()))
@@ -63,6 +68,44 @@ public class CourseServiceImpl implements CourseService {
         // Save
         course.setId(null);
         course.setStatus("202001"); // Unpublished
+        repository.save(course);
+
+        // Result
+        return ResponseResult.SUCCESS();
+    }
+
+    @Override
+    public CourseBase getById(String id) {
+        Optional<CourseBase> courseOptional = null;
+        if (isEmpty(id) || (courseOptional = repository.findById(id)).isEmpty())
+            ExceptionCast.cast(CourseCode.COURSE_NOT_EXISTS);
+
+        return courseOptional.get();
+    }
+
+    @Override
+    public CourseResponse findById(String id) {
+        return new CourseResponse(CommonCode.SUCCESS, getById(id));
+    }
+
+    @Override
+    @Transactional
+    public ResponseResult edit(CourseBase course) {
+        // Filter data
+        if (isEmpty(course.getName()) || isEmpty(course.getGrade()) || isEmpty(course.getStudymodel()))
+            ExceptionCast.cast(CourseCode.COURSE_ADD_INPUT_FIL);
+        // TODO User identity check
+
+        // Update
+        CourseBase dCourse = getById(course.getId());
+        dCourse.setName(course.getName());
+        dCourse.setUsers(course.getUsers());
+        dCourse.setMt(course.getMt());
+        dCourse.setSt(course.getSt());
+        dCourse.setGrade(course.getGrade());
+        dCourse.setStudymodel(course.getStudymodel());
+        dCourse.setDescription(course.getDescription());
+        // Save
         repository.save(course);
 
         // Result

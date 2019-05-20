@@ -63,12 +63,14 @@ public class CmsPageController implements CmsPageControllerApi {
     @Override
     @DeleteMapping("/del/{id}")
     public ResponseResult delete(@PathVariable(name = "id") String id) {
+        log.info("\nDelete page, id({})", id);
         return service.delete(id);
     }
 
     @Override
     @PostMapping("/release/{id}")
     public ResponseResult release(@PathVariable(name = "id") String id) {
+        log.info("\nRelease page, id({})", id);
         return service.release(id);
     }
 }

@@ -11,7 +11,7 @@
         <el-input :disabled="this.courseMarketForm.charge == '203002'?false:true"
                   v-model="courseMarketForm.price"></el-input>
       </el-form-item>
-      <el-form-item label="课程有效期" prop="expires">
+      <el-form-item label="课程有效期" prop="valid">
         <b v-for="valid in validList">
           <el-radio v-model="courseMarketForm.valid" :label="valid.sdId">{{valid.sdName}}</el-radio>&nbsp;&nbsp;
         </b>
@@ -52,7 +52,6 @@
           charge: '',
           valid: '',
           price: '',
-          expires: '',
           startTime: '',
           endTime: '',
           users: '',
@@ -60,7 +59,7 @@
           courseid: this.courseid
         },
         courseMarketFormRules: {
-          free: [
+          charge: [
             {required: true, message: '请选择收费规则', trigger: 'blur'}
           ],
           valid: [
@@ -74,7 +73,7 @@
         this.$refs.courseMarketForm.validate((valid) => {
           if (valid) {
             this.$confirm('确认提交吗？', '提示', {}).then(() => {
-              courseApi.updateCourseMarket(this.courseid, this.courseMarketForm).then((res) => {
+              courseApi.saveCourseMarket(this.courseid, this.courseMarketForm).then((res) => {
                 this.editLoading = false;
                 if (res.success) {
                   this.$message.success('提交成功');
@@ -100,17 +99,18 @@
       this.courseMarketForm.id = this.courseid;
       //查询字典
       systemApi.sys_getDictionary('203').then((res) => {
-        this.chargeList = res.dvalue;
+        if (res.success) this.chargeList = res.sysDictionary.dvalue;
+        else this.$message.error(res.message);
       });
       systemApi.sys_getDictionary('204').then((res) => {
-        this.validList = res.dvalue;
+        if (res.success) this.validList = res.sysDictionary.dvalue;
+        else this.$message.error(res.message);
       });
 
       //获取课程营销信息
       courseApi.getCourseMarketById(this.courseid).then((res) => {
-        //console.log(res);
-        if (res && res.id) {
-          this.courseMarketForm = res;
+        if (res.success && res.market.id) {
+          this.courseMarketForm = res.market;
         }
       });
     }

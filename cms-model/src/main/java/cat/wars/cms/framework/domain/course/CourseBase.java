@@ -26,9 +26,7 @@ public class CourseBase implements Serializable {
      * 课程名称
      */
     private String name;
-    /**
-     * 适用人群
-     */
+    /** 适用人群 */
     private String users;
     /** 课程大分类 */
     private String mt;

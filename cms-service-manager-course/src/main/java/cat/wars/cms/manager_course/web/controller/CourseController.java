@@ -4,6 +4,7 @@ import cat.wars.cms.api.course.CourseControllerApi;
 import cat.wars.cms.framework.domain.course.CourseBase;
 import cat.wars.cms.framework.domain.course.ext.CourseInfo;
 import cat.wars.cms.framework.domain.course.request.CourseListRequest;
+import cat.wars.cms.framework.domain.course.response.CourseResponse;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
 import cat.wars.cms.framework.model.response.ResponseResult;
 import cat.wars.cms.manager_course.service.CourseService;
@@ -33,12 +34,28 @@ public class CourseController implements CourseControllerApi {
     @GetMapping("/list/{page}/{size}")
     public QueryResponseResult<CourseInfo> findList(@PathVariable(name = "page") int page
             , @PathVariable(name = "size") int size, CourseListRequest params) {
+        log.info("Query course list, page({}), size({}), params(\n\t{}\n)", page, size, params);
         return service.findList(page, size, params);
     }
 
     @Override
     @PostMapping("/add")
     public ResponseResult add(@RequestBody CourseBase course) {
+        log.info("Add course, course(\n\t{}\n)", course);
         return service.add(course);
+    }
+
+    @Override
+    @GetMapping("/get/{id}")
+    public CourseResponse getById(@PathVariable(name = "id") String id) {
+        log.info("Query course by id, id({})", id);
+        return service.findById(id);
+    }
+
+    @Override
+    @PutMapping("/update/{id}")
+    public ResponseResult edit(@PathVariable(name = "id") String id, @RequestBody CourseBase course) {
+        log.info("Update course, id({}), course(\n\t{}\n)", id, course);
+        return service.edit(course);
     }
 }
