@@ -152,6 +152,13 @@ project("cms-service-manager-course") {
         implementation project(":cms-api")
     }
 }
+project("cms-service-fs") {
+    dependencies {
+        implementation project(":cms-common")
+        implementation project(":cms-model")
+        implementation project(":cms-api")
+    }
+}
 
 // Warpper
 wrapper {
