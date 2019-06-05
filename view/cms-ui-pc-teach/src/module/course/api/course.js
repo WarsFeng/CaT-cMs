@@ -45,16 +45,16 @@ export const saveCourseMarket = (courseId, market) => {
 
 //保存课程图片地址到课程数据 库
 export const addCoursePic = (courseId, pic) => {
-  return http.requestPost(apiUrl + '/course/coursepic/add?courseId=' + courseId + "&pic=" + pic)
+  return http.requestPut(apiUrl + '/course/image/cover/save/' + courseId + '?fileId=' + pic)
 };
 //查询课程图片
-export const findCoursePicList = courseId => {
-  return http.requestQuickGet(apiUrl + '/course/coursepic/list/' + courseId)
+export const findCourseCover = courseId => {
+  return http.requestQuickGet(apiUrl + '/course/image/cover/' + courseId)
 };
 
 //删除课程图片
 export const deleteCoursePic = courseId => {
-  return http.requestDelete(apiUrl + '/course/coursepic/delete?courseId=' + courseId)
+  return http.requestDelete(apiUrl + '/course/image/cover/' + courseId)
 };
 /*预览课程*/
 export const preview = id => {

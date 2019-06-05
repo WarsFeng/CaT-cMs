@@ -67,8 +67,8 @@ module.exports = {
 
       },
 
-      '/api/filesystem': {//文件系统管理
-        target: 'http://127.0.0.1:22100',
+      '/api/fs': {//文件系统管理
+        target: 'http://127.0.0.1:20200',
         pathRewrite: {
           '^/api': ''
         }

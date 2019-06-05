@@ -1,8 +1,9 @@
 <template>
   <div>
     <el-upload
-      action="/api/filesystem/upload"
+      action="/api/fs/image/upload"
       list-type="picture-card"
+      :multiple="false"
       :before-upload="setuploaddata"
       :on-success="handleSuccess"
       :file-list="fileList"
@@ -26,7 +27,7 @@
         dialogImageUrl: '',
         dialogVisible: false,
         fileList: [],
-        uploadval: {filetag: "course"},//上传提交的额外的数据 ，将uploadval转成key/value提交给服务器
+        uploadval: {fileTag: "course", businessKey: "cover_image"},//上传提交的额外的数据 ，将uploadval转成key/value提交给服务器
         imgUrl: sysConfig.imgUrl
       }
     },
@@ -41,13 +42,11 @@
       },
       //删除图片
       handleRemove(file, fileList) {
-        console.log(file)
         //调用服务端去删除课程图片信息，如果返回false，前端停止删除
         //异步调用
         return new Promise((resolve, rejct) => {
           courseApi.deleteCoursePic(this.courseid).then(res => {
             if (res.success) {
-
               //成功
               resolve()
             } else {
@@ -67,7 +66,7 @@
         //调用课程管理的保存图片接口，将图片信息保存到课程管理数据库course_pic中
         //从response得到新的图片文件的地址
         if (response.success) {
-          let fileId = response.fileSystem.fileId;
+          let fileId = response.image.fileId;
           courseApi.addCoursePic(this.courseid, fileId).then(res => {
             if (res.success) {
               this.$message.success("上传图片")
@@ -107,11 +106,11 @@
       //课程id
       this.courseid = this.$route.params.courseid;
       //查询课程
-      courseApi.findCoursePicList(this.courseid).then(res => {
-        if (res && res.pic) {
-          let imgUrl = this.imgUrl + res.pic;
+      courseApi.findCourseCover(this.courseid).then(res => {
+        if (res.success) {
+          let imgUrl = this.imgUrl + res.cover.pic;
           //将图片地址设置到
-          this.fileList.push({name: 'pic', url: imgUrl, fileId: res.pic})
+          this.fileList.push({name: 'pic', url: imgUrl, fileId: res.cover.pic})
         }
 
       })
