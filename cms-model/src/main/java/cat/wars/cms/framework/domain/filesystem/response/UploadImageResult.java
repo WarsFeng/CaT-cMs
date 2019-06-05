@@ -1,6 +1,6 @@
 package cat.wars.cms.framework.domain.filesystem.response;
 
-import cat.wars.cms.framework.domain.filesystem.FileSystem;
+import cat.wars.cms.framework.domain.filesystem.FileSystemImage;
 import cat.wars.cms.framework.model.response.ResponseResult;
 import cat.wars.cms.framework.model.response.ResultCode;
 import io.swagger.annotations.ApiModelProperty;
@@ -14,13 +14,13 @@ import lombok.ToString;
 @Data
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class UploadFileResult extends ResponseResult {
+public class UploadImageResult extends ResponseResult {
+
     @ApiModelProperty(value = "文件信息", example = "true", required = true)
-    FileSystem fileSystem;
+    FileSystemImage image;
 
-    public UploadFileResult(ResultCode resultCode, FileSystem fileSystem) {
+    public UploadImageResult(ResultCode resultCode, FileSystemImage image) {
         super(resultCode);
-        this.fileSystem = fileSystem;
+        this.image = image;
     }
-
 }

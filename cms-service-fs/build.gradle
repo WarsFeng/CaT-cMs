@@ -1,0 +1,17 @@
+apply plugin: "org.springframework.boot"
+
+dependencies {
+    annotationProcessor "org.projectlombok:lombok"
+    compileOnly "org.projectlombok:lombok"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.apache.commons:commons-lang3"
+    implementation "org.apache.commons:commons-io"
+    implementation "net.oschina.zcx7878:fastdfs-client-java"
+    implementation "com.alibaba:fastjson"
+    implementation "org.springframework.boot:spring-boot-starter-data-mongodb"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombok_version}"
+    testCompileOnly "org.projectlombok:lombok:${lombok_version}"
+}
+

@@ -13,7 +13,7 @@ import java.util.Map;
 @Data
 @ToString
 @Document(collection = "filesystem")
-public class FileSystem {
+public class FileSystemImage {
 
     @Id
     private String fileId;
@@ -37,5 +37,4 @@ public class FileSystem {
     private String filetag;
     //文件元信息
     private Map metadata;
-
 }
