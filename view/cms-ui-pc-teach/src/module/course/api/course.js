@@ -61,12 +61,12 @@ export const preview = id => {
   return http.requestPost(apiUrl + '/course/preview/' + id);
 };
 /*发布课程*/
-export const publish = id => {
-  return http.requestPost(apiUrl + '/course/publish/' + id);
+export const release = id => {
+  return http.requestPost(apiUrl + '/course/release/' + id);
 };
 //查询课程信息
 export const findCourseView = courseId => {
-  return http.requestQuickGet(apiUrl + '/course/courseview/' + courseId)
+  return http.requestQuickGet(apiUrl + '/course/view/' + courseId)
 };
 
 /*保存媒资信息*/

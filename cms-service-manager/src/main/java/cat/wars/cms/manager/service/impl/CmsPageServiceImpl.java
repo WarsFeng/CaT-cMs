@@ -4,8 +4,9 @@ import cat.wars.cms.framework.domain.cms.CmsPage;
 import cat.wars.cms.framework.domain.cms.CmsSite;
 import cat.wars.cms.framework.domain.cms.request.CmsQueryPageRequest;
 import cat.wars.cms.framework.domain.cms.response.CmsCode;
-import cat.wars.cms.framework.domain.cms.response.CmsConfigResult;
+import cat.wars.cms.framework.domain.cms.response.CmsPageDataResult;
 import cat.wars.cms.framework.domain.cms.response.CmsPageResult;
+import cat.wars.cms.framework.domain.cms.response.CmsPostPageResult;
 import cat.wars.cms.framework.exception.ExceptionCast;
 import cat.wars.cms.framework.model.response.CommonCode;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
@@ -187,9 +188,9 @@ public class CmsPageServiceImpl implements CmsPageService {
 
         // Get model data by dataUrl
         if (isEmpty(page.getDataUrl())) ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_DATAURLISNULL);
-        ResponseEntity<CmsConfigResult> responseEntity = restTemplate.getForEntity(page.getDataUrl(), CmsConfigResult.class);
-        CmsConfigResult cmsConfigResult = responseEntity.getBody();
-        if (null == cmsConfigResult || !cmsConfigResult.isSuccess())
+        ResponseEntity<CmsPageDataResult> responseEntity = restTemplate.getForEntity(page.getDataUrl(), CmsPageDataResult.class);
+        CmsPageDataResult cmsPageDataResult = responseEntity.getBody();
+        if (null == cmsPageDataResult || !cmsPageDataResult.isSuccess())
             ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_DATAURLISNULL);
 
         // Merge to html
@@ -200,7 +201,7 @@ public class CmsPageServiceImpl implements CmsPageService {
         try {
             Template template = configuration.getTemplate("template");
             // Result
-            return FreeMarkerTemplateUtils.processTemplateIntoString(template, cmsConfigResult.getConfig());
+            return FreeMarkerTemplateUtils.processTemplateIntoString(template, cmsPageDataResult.getData());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -233,4 +234,36 @@ public class CmsPageServiceImpl implements CmsPageService {
         return ResponseResult.SUCCESS();
     }
 
+    @Override
+    public CmsPageResult save(CmsPage page) {
+        Optional<CmsPage> pageOptional = repository.findBySiteIdAndPageWebPathAndPageName(page.getSiteId(), page.getPageWebPath(), page.getPageName());
+        if (pageOptional.isEmpty()) { // Add
+            return this.add(page);
+        } else { // Update
+            page.setPageId(pageOptional.get().getPageId());
+            return this.edit(page.getPageId(), page);
+        }
+    }
+
+    @Override
+    public CmsPostPageResult releaseQuick(CmsPage page) {
+        // Verify
+        CmsPageResult dPageResult = this.save(page);
+        String pageId = null;
+        // Save fail or release fail
+        if (!dPageResult.isSuccess() ||
+                !this.release((pageId = dPageResult.getCmsPage().getPageId())).isSuccess())
+            ExceptionCast.cast(CommonCode.FAIL);
+
+        // Released, combination url
+        CmsPage dPage = this.getById(pageId);
+        Optional<CmsSite> siteOptional = null;
+        if ((siteOptional = siteRepository.findById(dPage.getSiteId())).isEmpty())
+            ExceptionCast.cast(CmsCode.CMS_GENERATEHTML_PAGE_SITE_ISNULL);
+
+        // FullUrl = siteDomain + siteWebPath + pageWebPath + pageName
+        CmsSite site = siteOptional.get();
+        String pageUrl = site.getSiteDomain() + site.getSiteWebPath() + dPage.getPageWebPath() + dPage.getPageName();
+        return new CmsPostPageResult(CommonCode.SUCCESS, pageUrl);
+    }
 }

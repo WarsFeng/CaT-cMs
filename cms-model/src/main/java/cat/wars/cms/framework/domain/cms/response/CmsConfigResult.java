@@ -18,13 +18,13 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class CmsConfigResult extends ResponseResult {
 
-    private CmsConfig config;
+    private CmsConfig data;
 
     public CmsConfigResult() {
     }
 
     public CmsConfigResult(ResultCode resultCode, CmsConfig config) {
         super(resultCode);
-        this.config = config;
+        this.data = config;
     }
 }

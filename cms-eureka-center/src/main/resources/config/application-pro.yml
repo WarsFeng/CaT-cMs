@@ -1,0 +1,18 @@
+server:
+  port: ${PORT:51200}
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${EUREKA_SERVER:http://localhost:51200/eureka}
+  server:
+    enable-self-preservation: true
+    eviction-interval-timer-in-ms: 600000
+  instance:
+    hostname: ${EUREKA_DOMAIN:eureka01}
+
+spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration

@@ -3,6 +3,7 @@ package cat.wars.cms.api.cms;
 import cat.wars.cms.framework.domain.cms.CmsPage;
 import cat.wars.cms.framework.domain.cms.request.CmsQueryPageRequest;
 import cat.wars.cms.framework.domain.cms.response.CmsPageResult;
+import cat.wars.cms.framework.domain.cms.response.CmsPostPageResult;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
 import cat.wars.cms.framework.model.response.ResponseResult;
 import io.swagger.annotations.Api;
@@ -46,4 +47,10 @@ public interface CmsPageControllerApi {
     @ApiOperation("Release page by id")
     @ApiImplicitParam(name = "id", value = "page id", required = true, paramType = "path", dataType = "string")
     ResponseResult release(String id);
+
+    @ApiOperation("Save page, add or update")
+    CmsPageResult save(CmsPage page);
+
+    @ApiOperation("Quick release page")
+    CmsPostPageResult releaseQuick(CmsPage cmsPage);
 }

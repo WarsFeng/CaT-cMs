@@ -1,12 +1,30 @@
 server:
   port: 20100
 
+# Discovery
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${EUREKA_SERVER:http://localhost:51200/eureka}
+  instance:
+    prefer-ip-address: true
+    ip-address: ${IP_ADDR:127.0.0.1}
+    instance-id: ${spring.application.name}:${server.port}
+
 spring:
+  # MongoDB
+  data:
+    mongodb:
+      uri: mongodb://127.0.0.1:27017
+      database: cms
+
   datasource:
     # MySQL Pool
     druid:
       url: jdbc:mariadb://localhost:3306/cms_course
-      username:
+      username: root
       password:
       driver-class-name: org.mariadb.jdbc.Driver
       # Poll parameter
@@ -25,3 +43,17 @@ spring:
       time-between-eviction-runs-millis: 2000
       min-evictable-idle-time-millis: 600000
       max-evictable-idle-time-millis: 900000
+# PageHelper
+pagehelper:
+  helper-dialect: mysql # oracle,mysql,mariadb,sqlite,hsqldb,postgresql,db2,sqlserver,informix,h2,sqlserver2012,derby
+  auto-runtime-dialect: true # Multi data source
+
+course:
+  publish:
+    siteId: 5a751fab6abb5044e0d19ea1
+    templateId: 5d15356b9dcfd901df767fbf
+    previewUrlPre: http://cms.wars.cat/cms/page/preview/
+    pageWebPath: /course/detail/
+    pagePhysicalPath: /course/detail/
+    dataUrlPre: http://localhost:20100/course/view/
+

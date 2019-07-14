@@ -7,9 +7,13 @@
             <span>课程预览</span>
           </div>
           <div class="text item">
-            <el-button type="primary" @click.native="preview">课程预览</el-button>
-            <br/><br/>
-            <span v-if="previewurl && previewurl!=''"><a :href="previewurl" target="_blank">点我查看课程预览页面 </a> </span>
+            <el-button type="primary" icon="el-icon-s-promotion" @click.native="preview">预览</el-button>
+            <!--            <br/><br/>-->
+            <span v-if="previewUrl && previewUrl!=''">
+              <a :href="previewUrl" target="_blank">
+                <el-button type="success" icon="el-icon-camera" round>查看</el-button>
+              </a>
+            </span>
           </div>
         </el-card>
         <el-card class="box-card">
@@ -24,14 +28,14 @@
             <div v-else-if="course.status == '202003'">
               状态：已下线
               <br/><br/>
-              <span><a :href="'http://www.xuecheng.com/course/detail/'+this.courseid+'.html'"
+              <span><a :href="'http://cms.wars.cat/course/detail/'+this.courseid+'.html'"
                        target="_blank">点我查看课程详情页面 </a> </span>
             </div>
             <div v-else-if="course.status == '202002'">
               状态：已发布<br/>
               <el-button type="primary" @click.native="publish">修改发布</el-button>
               <br/><br/>
-              <span><a :href="'http://www.xuecheng.com/course/detail/'+this.courseid+'.html'"
+              <span><a :href="'http://cms.wars.cat/course/detail/'+this.courseid+'.html'"
                        target="_blank">点我查看课程详情页面 </a> </span>
             </div>
           </div>
@@ -50,7 +54,7 @@
         dotype: '',
         courseid: '',
         course: {"id": "", "name": "", "status": ""},
-        previewurl: ''
+        previewUrl: ''
       }
     },
     methods: {
@@ -59,10 +63,10 @@
         //调用课程管理服务的预览接口，得到课程预览url
         courseApi.preview(this.courseid).then((res) => {
           if (res.success) {
-            this.$message.error('预览页面生成成功，请点击下方预览链接');
+            this.$message.success('预览页面生成成功，请点击下方预览链接');
             if (res.previewUrl) {
               //预览url
-              this.previewurl = res.previewUrl
+              this.previewUrl = res.previewUrl
             }
           } else {
             this.$message.error(res.message);
@@ -71,7 +75,7 @@
       },
       publish() {
         //课程发布
-        courseApi.publish(this.courseid).then(res => {
+        courseApi.release(this.courseid).then(res => {
           if (res.success) {
             this.$message.success("发布成功，请点击下边的链接查询课程详情页面")
 
@@ -83,9 +87,9 @@
       },
       getCourseView() {
         courseApi.findCourseView(this.courseid).then(res => {
-          if (res && res.courseBase) {
+          if (res.success) {
             //获取课程状态
-            this.course.status = res.courseBase.status;
+            this.course.status = res.data.base.status;
           }
 
         })

@@ -3,6 +3,7 @@ package cat.wars.cms.manager.service;
 import cat.wars.cms.framework.domain.cms.CmsPage;
 import cat.wars.cms.framework.domain.cms.request.CmsQueryPageRequest;
 import cat.wars.cms.framework.domain.cms.response.CmsPageResult;
+import cat.wars.cms.framework.domain.cms.response.CmsPostPageResult;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
 import cat.wars.cms.framework.model.response.ResponseResult;
 
@@ -83,4 +84,20 @@ public interface CmsPageService {
      * @return cat.wars.cms.framework.model.response.ResponseResult
      */
     ResponseResult release(String id);
+
+    /**
+     * Save page, add or update
+     *
+     * @param page {@link CmsPage}
+     * @return cat.wars.cms.framework.domain.cms.response.CmsPageResult
+     */
+    CmsPageResult save(CmsPage page);
+
+    /**
+     * Quick release page
+     *
+     * @param page {@link CmsPage}
+     * @return cat.wars.cms.framework.domain.cms.response.CmsPostPageResult
+     */
+    CmsPostPageResult releaseQuick(CmsPage page);
 }

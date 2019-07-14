@@ -4,6 +4,7 @@ import cat.wars.cms.api.cms.CmsPageControllerApi;
 import cat.wars.cms.framework.domain.cms.CmsPage;
 import cat.wars.cms.framework.domain.cms.request.CmsQueryPageRequest;
 import cat.wars.cms.framework.domain.cms.response.CmsPageResult;
+import cat.wars.cms.framework.domain.cms.response.CmsPostPageResult;
 import cat.wars.cms.framework.model.response.QueryResponseResult;
 import cat.wars.cms.framework.model.response.ResponseResult;
 import cat.wars.cms.manager.service.CmsPageService;
@@ -72,5 +73,19 @@ public class CmsPageController implements CmsPageControllerApi {
     public ResponseResult release(@PathVariable(name = "id") String id) {
         log.info("\nRelease page, id({})", id);
         return service.release(id);
+    }
+
+    @Override
+    @PostMapping("/save")
+    public CmsPageResult save(@RequestBody CmsPage page) {
+        log.info("\nSave page, page(\n\t{}\n)", page);
+        return service.save(page);
+    }
+
+    @Override
+    @PostMapping("/release_quick")
+    public CmsPostPageResult releaseQuick(@RequestBody CmsPage page) {
+        log.info("\nQuick release page, page(\n\t{}\t)", page);
+        return service.releaseQuick(page);
     }
 }

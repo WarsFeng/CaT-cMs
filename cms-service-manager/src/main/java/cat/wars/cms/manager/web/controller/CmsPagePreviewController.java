@@ -33,6 +33,7 @@ public class CmsPagePreviewController extends BaseController {
         log.info("\nCms page preview, id({})", id);
         try {
             String pageHtml = service.getPageHtml(id);
+            response.setContentType("text/html;charset=utf-8");
             response.getOutputStream().write(pageHtml.getBytes(Charset.forName("UTF-8")));
         } catch (IOException e) {
             e.printStackTrace();

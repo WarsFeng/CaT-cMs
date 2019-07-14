@@ -1,6 +1,7 @@
 package cat.wars.cms.framework.domain.cms;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,6 +12,7 @@ import java.util.List;
 @Data
 @ToString
 @Document(collection = "cms_page")
+@NoArgsConstructor
 public class CmsPage {
     /**
      * 页面名称、别名、访问地址、类型（静态/动态）、页面模版、状态
@@ -30,7 +32,7 @@ public class CmsPage {
     private String pageParameter;
     //物理路径
     private String pagePhysicalPath;
-    //类型（静态/动态）
+    //类型（静态/动态-1）
     private String pageType;
     //页面模版
     private String pageTemplate;

@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
@@ -29,15 +30,16 @@ public class MongoConfigTest {
 
     @Test
     public void testGridFSStore() throws IOException {
-        ObjectId objectId = gridFsTemplate.store(new FileInputStream("/tmp/index_banner.html"), "轮播图测试", "");
+        ObjectId objectId = gridFsTemplate.store(new FileInputStream("/tmp/course.ftl"), "Course detail test", "");
         System.out.println(objectId);
     }
 
     @Test
     public void testGridFSBucket() throws IOException {
-        String fileid = "5ca1cfcd9b89c6439dfd19bf";
+        String fileid = "5d1533f09dcfd97eae6ea24a";
         GridFSFile file = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(fileid)));
         GridFSDownloadStream downloadStream = gridFSBucket.openDownloadStream(file.getObjectId());
+        IOUtils.copy(downloadStream, new FileOutputStream("/tmp/course.ftl"));
         System.out.println(IOUtils.toString(downloadStream, Charset.forName("UTF-8")));
     }
 }

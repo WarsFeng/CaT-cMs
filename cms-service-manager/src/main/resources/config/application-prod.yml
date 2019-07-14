@@ -1,0 +1,41 @@
+server:
+  port: 20000
+
+# Discovery
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${EUREKA_SERVER:http://localhost:51200/eureka}
+  instance:
+    prefer-ip-address: true
+    ip-address: ${IP_ADDR:127.0.0.1}
+    instance-id: ${spring.application.name}:${server.port}
+
+
+
+spring:
+  # MongoDB
+  data:
+    mongodb:
+      uri: mongodb://127.0.0.1:27017
+      database: cms
+
+  # Freemarker
+  freemarker:
+    cache: false
+    settings:
+      template_update_delay: 0
+
+  # RabbitMQ
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: wars
+    password: Warscat
+    virtual-host: /
+    params:
+      exchange:
+        page-release: exchange_routing_cms_page_release
+

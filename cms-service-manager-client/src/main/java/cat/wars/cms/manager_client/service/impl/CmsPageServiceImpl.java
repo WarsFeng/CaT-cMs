@@ -57,13 +57,13 @@ public class CmsPageServiceImpl implements CmsPageService {
         /// Save
         try {
             IOUtils.copy(downloadStream, new FileOutputStream(fullPath));
+            return true;
         } catch (FileNotFoundException e) {
-            new File(dirPath).mkdirs();
-            savePageToServerPath(id);
+            if (new File(dirPath).mkdirs())
+                savePageToServerPath(id);
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
-        return true;
+        return false;
     }
 }

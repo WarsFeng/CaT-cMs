@@ -7,4 +7,5 @@ include 'cms-service-manager'
 include 'cms-service-manager-client'
 include 'cms-service-manager-course'
 include 'cms-service-fs'
+include 'cms-eureka-center'
 

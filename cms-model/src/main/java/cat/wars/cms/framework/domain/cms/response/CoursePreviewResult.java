@@ -7,18 +7,16 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-/**
- * Created by admin on 2018/3/5.
- */
 @Data
 @ToString
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class CoursePreviewResult extends ResponseResult {
-    public CoursePreviewResult(ResultCode resultCode, String url) {
-        super(resultCode);
-        this.url = url;
-    }
 
-    String url;
+    String previewUrl;
+
+    public CoursePreviewResult(ResultCode resultCode, String previewUrl) {
+        super(resultCode);
+        this.previewUrl = previewUrl;
+    }
 }

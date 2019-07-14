@@ -26,26 +26,47 @@ public class CourseBase implements Serializable {
      * 课程名称
      */
     private String name;
-    /** 适用人群 */
+    /**
+     * 适用人群
+     */
     private String users;
-    /** 课程大分类 */
+    /**
+     * 课程大分类
+     */
     private String mt;
-    /** 课程小分类 */
+    /**
+     * 课程小分类
+     */
     private String st;
-    /** 课程等级 */
+    /**
+     * 课程等级
+     */
     private String grade;
-    /** 学习模式 */
+    /**
+     * 学习模式
+     */
     private String studymodel;
-    /** 授课模式 */
+    /**
+     * 授课模式
+     */
     private String teachmode;
-    /** 课程介绍 */
+    /**
+     * 课程介绍
+     */
     private String description;
-    /** 课程状态 */
+    /**
+     * 课程状态
+     * 202001-制作中 202002-已发布 202003-已下线
+     */
     private String status;
-    /** 教育机构 */
+    /**
+     * 教育机构
+     */
     @Column(name = "company_id")
     private String companyId;
-    /** 创建用户 */
+    /**
+     * 创建用户
+     */
     @Column(name = "user_id")
     private String userId;
 }
