@@ -70,7 +70,7 @@
     "mockjs": "^1.0.1-beta3",
     "nightwatch": "^1.1.13",
     "node-notifier": "^5.1.2",
-    "node-sass": "^4.7.2",
+    "node-sass": "^7.0.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "ora": "^1.4.0",
     "portfinder": "^1.0.21",
